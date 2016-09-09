@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Notifier v1.0 - Infos compte</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<!-- header  -->
+	<nav th:replace="fragments/header::header"></nav>
+	<div class="container-fuild">
+			<div class="well">
+				<p>
+					<span class="badge">15300</span> <small>Crédits restants</small>
+				</p>
+				<p>KOUAKOU Alan<br/><small>Compte créé le: 05/09/2016 à 08:30:05</small></p>
+			</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-offset-3 col-xs-6">
+				<h4>Activité récente</h4>
+				<p>
+					Dernière connexion le <span class="text-info">06/09/2016
+						05:02:03</span>
+				</p>
+			</div>
+			<h4></h4>
+
+
+
+			<div class="col-xs-offset-3 col-xs-6">
+				<table class="table table-hover table-striped">
+					<tr class="success">
+						<th>Contact</th>
+						<th>Date</th>
+						<th>Statut</th>
+					</tr>
+					<tr>
+						<td>09 00 77 18</td>
+						<td>06/09/2016 04:23:07</td>
+						<td>Réussi</td>
+					</tr>
+					<tr>
+						<td>47 75 02 01</td>
+						<td>06/09/2016 04:25:10</td>
+						<td>Réussi</td>
+					</tr>
+					<tr>
+						<td>08 22 85 89</td>
+						<td>06/09/2016 04:30:09</td>
+						<td>Réussi</td>
+					</tr>
+
+
+				</table>
+			</div>
+		</div>
+
+
+		<hr></hr>
+		<div class="row">
+			<div class="col-xs-12">
+				<footer>
+					<p>&copy; Copyright 2016 Echo+</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

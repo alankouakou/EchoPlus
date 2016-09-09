@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Confirmation d'envoi</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<nav th:replace="fragments/header::header"></nav>
+				<p>
+					Félicitations!<br /> Message envoyé!<br /> Expediteur : <span
+						th:text="${sms.from}"></span><br /> destinataire: <span
+						th:text="${sms.to}"></span><br /> Message: <span
+						th:text="${sms.text}"></span>
+				</p>
+		<hr></hr>
+		<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
