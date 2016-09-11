@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Confirmation d'envoi</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<nav th:replace="fragments/header::header"></nav>
+	<div class="row">
+		<table class="table table-striped">
+			<tr>
+				<th>Nom</th>
+				<th>Contact</th>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	<p th:text="${filename}"> 	</p>
+	<hr></hr>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
