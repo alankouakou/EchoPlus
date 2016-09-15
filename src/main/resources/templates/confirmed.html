@@ -7,13 +7,22 @@
 </head>
 <body>
 	<nav th:replace="fragments/header::header"></nav>
-				<p>
-					Félicitations!<br /> Message envoyé!<br /> Expediteur : <span
-						th:text="${sms.from}"></span><br /> destinataire: <span
-						th:text="${sms.to}"></span><br /> Message: <span
-						th:text="${sms.text}"></span>
-				</p>
-		<hr></hr>
-		<div th:replace="fragments/footer::footer"></div>
+	<div class="jumbotron">
+
+		<div class="container-fluid">
+		<h2>Félicitations!</h2>
+		</div>
+
+	</div>
+	<div class="container-fluid">
+			<p>
+				 Message envoyé!<br /> Expediteur : <span
+					th:text="${sms.from}"></span><br /> destinataire: <span
+					th:text="${sms.to}"></span><br /> Message: <span
+					th:text="${sms.text}"></span>
+			</p>
+	</div>
+
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

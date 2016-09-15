@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.Person;
 import com.example.model.Sms;
+import com.example.util.SmSTool;
 
 import infobip.api.client.SendSingleTextualSms;
 import infobip.api.config.BasicAuthConfiguration;
@@ -22,8 +23,8 @@ import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
 @Controller
 public class IndexController {
 
-	private static final String USERNAME = "ALLIANZCI";
-	private static final String PASSWORD = "zAag2016";
+	private static final String USERNAME = "PHONEIVOIRE";
+	private static final String PASSWORD = "zAgg2016";
 
 	@RequestMapping("/")
 	public String index() {
@@ -72,31 +73,32 @@ public class IndexController {
 
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public String sendSms(@ModelAttribute("sms") Sms sms) {
-		SendSingleTextualSms client = new SendSingleTextualSms(new BasicAuthConfiguration(USERNAME, PASSWORD));
+		//SendSingleTextualSms client = new SendSingleTextualSms(new BasicAuthConfiguration(USERNAME, PASSWORD));
 
-		SMSTextualRequest requestBody = new SMSTextualRequest();
-		requestBody.setFrom(sms.getFrom());
-		StringTokenizer st = new StringTokenizer(sms.getTo(), ",");
+		//SMSTextualRequest requestBody = new SMSTextualRequest();
+		//requestBody.setFrom(sms.getFrom());
+		
 		ArrayList<String> destinataires = new ArrayList<String>();
+		destinataires = SmSTool.addPrefixToNumbers(sms.getTo());
 
-		while (st.hasMoreTokens()) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("225");
-			sb.append(st.nextToken());
-			destinataires.add(sb.toString());
-		}
-		requestBody.setTo(destinataires);
-		requestBody.setText(sms.getText());
+		//requestBody.setTo(destinataires);
+		//requestBody.setText(sms.getText());
 		if (destinataires.size() > 0) {
+			System.out.println(destinataires.toString());
+			/*
 			SMSResponse response = client.execute(requestBody);
 			SMSResponseDetails sentMessageInfo = response.getMessages().get(0);
 			System.out.println("Message ID: " + sentMessageInfo.getMessageId());
 			System.out.println("Receiver: " + sentMessageInfo.getTo());
 			System.out.println("Message status: " + sentMessageInfo.getStatus().getName());
+			*/
 			return "confirmed";
 		} else {
 			return "compose";
 		}
 	}
+	
+	
+
 
 }

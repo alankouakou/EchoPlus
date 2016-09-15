@@ -21,40 +21,37 @@ import com.example.util.FileValidator;
 
 @Controller
 public class FileUploadController {
-	
-	private static String UPLOAD_LOCATION="/upload/";
-	
+
+	private static String UPLOAD_LOCATION = "G:/uploads/";
+
 	@Autowired
 	private FileValidator fileValidator;
-	
+
 	@InitBinder("fileBucket")
-	private void initBinderFileBucket(WebDataBinder binder){
+	private void initBinderFileBucket(WebDataBinder binder) {
 		binder.setValidator(fileValidator);
 	}
-	
-	@RequestMapping(value="/composesv",method=RequestMethod.GET)
-	public String composeSmsWithCSV(ModelMap model){
-		FileBucket fileBucket= new FileBucket();
-		model.addAttribute("fileBucket", fileBucket);
-		return "compose_csv";
+
+	@RequestMapping(value = "/singleUpload", method = RequestMethod.GET)
+	public String composeSmsWithCSV(ModelMap model) {
+		 FileBucket fileModel= new FileBucket();
+		 model.addAttribute("fileBucket", fileModel);
+		return "singleFileUploader";
 	}
-	
-	@RequestMapping(value="/composesv",method=RequestMethod.POST)
-	public String sendSmsWithCSV(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException {
+
+	@RequestMapping(value="/singleUpload",method=RequestMethod.POST)
+	public String singleFileUpload(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException {
 		if(result.hasErrors()){
-			System.out.println("validation errors");
-			return "compose_csv";
+			System.out.println("validation errors: "+result.toString());
+			return "singleFileUploader";
 		} else {
-			MultipartFile multipartFile = fileBucket.getFile();
-			//Process the file
 			System.out.println("File processing...");
+			MultipartFile multipartFile = fileBucket.getFile();
 			FileCopyUtils.copy(fileBucket.getFile().getBytes(),new File(UPLOAD_LOCATION+fileBucket.getFile().getOriginalFilename()));
-			
 			String fileName = multipartFile.getOriginalFilename();
 			model.addAttribute("fileName", fileName);
-			return "confirmedCSV";
+			return "success";
 		}
 	}
-	
 
 }

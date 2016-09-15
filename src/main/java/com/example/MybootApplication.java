@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication
-@ComponentScan({"com.example.controller"})
+@ComponentScan({"com.example"})
 public class MybootApplication {
 	
 
@@ -23,6 +25,12 @@ public class MybootApplication {
         return resolver;
     }
 	
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }	
 	public static void main(String[] args) {
 		SpringApplication.run(MybootApplication.class, args);
 	}

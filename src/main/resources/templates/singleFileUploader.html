@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Insert title here</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<nav th:replace="fragments/header::header"></nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+			<h1 class="text-success">Communiquez efficacement!</h1>
+			<p>Votre solution de messagerie instantanée pour une
+				communication efficace!</p>
+
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<form action="#" th:action="@{/singleUpload}" method="POST"
+				th:object="${fileBucket}" class="form-horizontal"
+				enctype="multipart/form-data">
+				<div class="row">
+					<div class="form-group col-md-7">
+						<label class="col-md-3 control-label" for="file">Uploader
+							un fichier</label>
+						<div class="col-xs-4">
+							<input type="file" id="file" th:field="*{file}"
+								class="form-control input-sm" />
+						</div>
+					</div>
+				<div class="form-actions floatRight">
+					<input type="submit" value="upload" class="btn btn-primary btn-sm" />
+				</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -6,110 +6,66 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-   <nav id="myNavbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<nav th:replace="fragments/header :: header"></nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+			<h1 class="text-success">Communiquez efficacement!</h1>
+			<p>Votre solution de messagerie instantanée pour une
+				communication efficace!</p>
+			<p>
+				<a href="#" th:href="@{/compose}" class="btn btn-success btn-lg">Essayer
+					la solution!</a>
+			</p>
+		</div>
+	</div>
 
-        <!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container-fluid">
 
-        <div class="container-fluid">
+		<div class="row">
 
-            <div class="navbar-header">
+			<div class="col-xs-4">
 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<h2>Mes campagnes</h2>
 
-                    <span class="sr-only">Toggle navigation</span>
+				<p>Creez vos campagnes et envoyez vos SMS au bon moment!</p>
 
-                    <span class="icon-bar"></span>
+				<p>
+					<a th:href="@{/compose}" class="btn btn-warning">Nouvelle
+						campagne</a>
+				</p>
 
-                    <span class="icon-bar"></span>
+			</div>
 
-                    <span class="icon-bar"></span>
+			<div class="col-xs-4">
 
-                </button>
+				<h2>Mes groupes</h2>
 
-                <a class="navbar-brand" href="#">Echo+ v1.0</a>
+				<p>Grâce aux groupes, vous organisez vos contacts et votre
+					communication est mieux ciblée.</p>
 
-            </div>
+				<p>
+					<a href="#" th:href="@{/compose}" class="btn btn-warning">Nouveau
+						groupe</a>
+				</p>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+			</div>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+			<div class="col-xs-4">
 
-                <ul class="nav navbar-nav">
+				<h2>Mes contacts</h2>
 
-                    <li class="active"><a href="#">Accueil</a></li>
+				<p>Enregistrez vos contacts et organisez-les pour mieux</p>
 
-                    <li><a href="#" >Mon tableau de bord</a></li>
+				<p>
+					<a href="#" th:href="@{/register}" class="btn btn-warning">Nouveau
+						Contact</a>
+				</p>
 
-                    <li><a href="#"  th:href="@{/activites}"><span class="glyphicon glyphicon-user" > </span> Mon compte</a></li>
+			</div>
 
-                </ul>
+		</div>
 
-            </div>
-
-        </div>
-
-    </nav>
-
-    <div class="jumbotron">
-        <div class="container-fluid">
-            <h1 class="text-success">Communiquez efficacement!</h1>
-            <p>Votre solution de messagerie instantanée pour une communication efficace!</p>
-            <p><a href="#" th:href="@{/compose}" class="btn btn-success btn-lg">Essayer la solution!</a></p>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-
-        <div class="row">
-
-            <div class="col-xs-4">
-
-                <h2>Mes campagnes</h2>
-
-                <p>Creez vos campagnes et envoyez vos SMS au bon moment!</p>
-
-                <p><a th:href="@{/compose}" class="btn btn-warning">Nouvelle campagne</a></p>
-
-            </div>
-
-            <div class="col-xs-4">
-
-                <h2>Mes groupes</h2>
-
-                <p>Grâce aux groupes, vous organisez vos contacts et votre communication est mieux ciblée.</p>
-
-                <p><a href="#" th:href="@{/compose}" class="btn btn-warning">Nouveau groupe</a></p>
-
-            </div>
-
-            <div class="col-xs-4">
-
-                <h2>Mes contacts</h2>
-
-                <p>Enregistrez vos contacts et organisez-les pour mieux </p>
-
-                <p><a href="#" th:href="@{/register}" class="btn btn-warning">Nouveau Contact</a></p>
-
-            </div>
-
-        </div>
-
-        <hr></hr>
-
-        <div class="row">
-
-            <div class="col-xs-12">
-
-                <footer>
-
-                    <p>&copy; Copyright 2016 Echo+</p>
-
-                </footer>
-
-            </div>
-
-        </div>
-
-    </div>
+		<div th:replace="fragments/footer::footer"></div>
+	</div>
 </body>
 </html>

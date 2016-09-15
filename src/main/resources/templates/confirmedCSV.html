@@ -8,6 +8,13 @@
 <body>
 	<nav th:replace="fragments/header::header"></nav>
 	<div class="row">
+		<p th:text="${fileBucket.originalFileName}"></p>
+		
+		<p>Sms attributes<br/>
+		From   : ${sms.from}<br/>
+		to     : ${sms.to}<br/>
+		Message: ${sms.text}
+		</p>
 		<table class="table table-striped">
 			<tr>
 				<th>Nom</th>
@@ -23,7 +30,6 @@
 			</tr>
 		</table>
 	</div>
-	<p th:text="${filename}"> 	</p>
 	<hr></hr>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

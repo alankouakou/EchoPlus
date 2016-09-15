@@ -8,13 +8,17 @@
 <body>
 	<!-- header  -->
 	<nav th:replace="fragments/header::header"></nav>
-	<div class="container-fuild">
-			<div class="well">
-				<p>
-					<span class="badge">15300</span> <small>Crédits restants</small>
-				</p>
-				<p>KOUAKOU Alan<br/><small>Compte créé le: 05/09/2016 à 08:30:05</small></p>
-			</div>
+	<div class="jumbotron">
+		<div class="container-fluid">
+		<br/>
+			<p>
+				<span class="badge">15300</span> <small>Crédits restants</small>
+			</p>
+			<p class="text-success">
+				KOUAKOU Alan<br /> <small>Compte créé le: 05/09/2016 à
+					08:30:05</small>
+			</p>		
+		</div>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -57,15 +61,7 @@
 			</div>
 		</div>
 
-
-		<hr></hr>
-		<div class="row">
-			<div class="col-xs-12">
-				<footer>
-					<p>&copy; Copyright 2016 Echo+</p>
-				</footer>
-			</div>
-		</div>
+		<div th:replace="fragments/footer :: footer"></div>
 	</div>
 </body>
 </html>

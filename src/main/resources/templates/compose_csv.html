@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="www.thymeleaf.org">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Notifier v1.0</title>
@@ -63,8 +63,8 @@
 			<h1 class="text-success">Composez votre message</h1>
 			<div class="container-fluid">
 				<div class="row">
-					<form action="#" class="form-horizontal" th:action="@{/send}"
-						th:object="${sms}" method="post">
+					<form action="#" class="form-horizontal" th:action="@{/sendcsv}"
+						th:object="${sms}" method="post" enctype="multipart/form-data">
 
 						<div class="form-group">
 							<label for="from" class="control-label col-xs-2">Expéditeur</label>
@@ -74,11 +74,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="to" class="control-label col-xs-2">Destinataires</label>
+							<label for="file" class="control-label col-xs-2">fichier Destinataires</label>
 							<div class="col-xs-4">
-								<input type="text" class="form-control" th:field="*{to}" id="to"
-									placeholder="contact_1,contact_2,..,contact_n" />
+							<input type="file" class="form-control input-sm" th:field="*{file}" id="file" />
 							</div>
+							
 						</div>
 						<div class="form-group">
 							<label for="message" class="control-label col-xs-2">Message</label>
