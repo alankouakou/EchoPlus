@@ -18,7 +18,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<form action="#" th:action="@{/singleUpload}" method="POST"
-				th:object="${fileBucket}" class="form-horizontal"
+				th:object="${fileBucket}" class="form-inline"
 				enctype="multipart/form-data">
 				<div class="row">
 					<div class="form-group col-md-7">
@@ -29,7 +29,7 @@
 								class="form-control input-sm" />
 						</div>
 					</div>
-				<div class="form-actions floatRight">
+				<div class="form-actions float-right">
 					<input type="submit" value="upload" class="btn btn-primary btn-sm" />
 				</div>
 				</div>

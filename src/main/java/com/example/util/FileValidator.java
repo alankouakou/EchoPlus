@@ -5,7 +5,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.example.model.FileBucket;
-import com.example.model.SmsCsv;
 
 @Component
 public class FileValidator implements Validator {
