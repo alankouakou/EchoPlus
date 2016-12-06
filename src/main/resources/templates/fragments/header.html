@@ -1,56 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Ecko v1.0</title>
+
 </head>
 <body>
-   <nav id="myNavbar" class="navbar navbar-default navbar-fixed-top" role="navigation" th:fragment="header">
+	<nav id="myNavbar" class="navbar navbar-default navbar-fixed-top"
+		role="navigation" th:fragment="header">
 
-        <!-- Brand and toggle get grouped for better mobile display -->
+		<!-- Brand and toggle get grouped for better mobile display -->
 
-        <div class="container-fluid">
+		<div class="container-fluid">
 
-            <div class="navbar-header">
+			<div class="navbar-header">
 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navbarCollapse">
 
-                    <span class="sr-only">Toggle navigation</span>
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
 
-                    <span class="icon-bar"></span>
+				</button>
 
-                    <span class="icon-bar"></span>
+				<a class="navbar-brand" href="#" th:href="@{/}">Grio v1.0</a>
 
-                    <span class="icon-bar"></span>
+			</div>
 
-                </button>
+			<!-- Collect the nav links, forms, and other content for toggling -->
 
-                <a class="navbar-brand" href="#" th:href="@{/}">Grio v1.0</a>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
 
-            </div>
+				<ul class="nav navbar-nav">
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+					<li class="active"><a href="#">Accueil</a></li>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+					<li><a href="#">Mon tableau de bord</a></li>
 
-                <ul class="nav navbar-nav">
+					<li><a href="#"><span class="glyphicon glyphicon-list"></span>
+							Historique</a></li>
 
-                    <li class="active"><a href="#">Accueil</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a class="btn btn-primary" role="button"
+						sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" href="#"
+						th:href="@{/activites}"><span class="glyphicon glyphicon-user"></span>
+							<span sec:authentication="name"></span></a></li>
+					<li sec:authorize="isAuthenticated()"><a 
+						href="javascript:document.getElementById('logout').submit()"><span
+							class="glyphicon glyphicon-off"></span> Quitter </a>
+						<form id="logout" th:action="@{/logout}" method="post"></form></li>
+					<li><a sec:authorize="!isAuthenticated()" href="#"
+						th:href="@{/login}">S'identifier</a></li>
+				</ul>
 
-                    <li><a href="#" >Mon tableau de bord</a></li>
+			</div>
 
-                    <li><a href="#"><span class="glyphicon glyphicon-list"></span> Historique</a></li>
+		</div>
 
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" th:href="@{/activites}"><span class="glyphicon glyphicon-user"></span> Alan David KOUAKOU</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Déconnecter</a></li>
-                </ul>
-
-            </div>
-
-        </div>
-
-    </nav>
+	</nav>
 </body>
 </html>

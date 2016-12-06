@@ -17,39 +17,50 @@
 	</div>
 
 	<div class="container-fluid">
-			<form action="#" class="form-horizontal" th:action="@{/newcontact}"
-				th:object="${person}" method="post">
+		<form action="#" class="form-horizontal" th:action="@{/contacts/new}"
+			th:object="${person}" method="post">
 
-				<div class="form-group">
-					<label for="nom" class="control-label col-xs-2">Nom</label>
-					<div class="col-xs-4">
-						<input type="text" class="form-control" th:field="*{lastName}"
-							id="nom" placeholder="Nom" />
-					</div>
+			<div class="form-group">
+				<label for="nom" class="control-label col-xs-2">Nom</label>
+				<div class="col-xs-4">
+					<input type="text" class="form-control" th:field="*{lastName}"
+						id="nom" placeholder="Nom" />
 				</div>
-				<div class="form-group">
-					<label for="prenom" class="control-label col-xs-2">Prenom</label>
-					<div class="col-xs-4">
-						<input type="text" class="form-control" th:field="*{firstName}"
-							id="prenom" placeholder="Prenom" />
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="prenom" class="control-label col-xs-2">Prenom</label>
+				<div class="col-xs-4">
+					<input type="text" class="form-control" th:field="*{firstName}"
+						id="prenom" placeholder="Prenom" />
 				</div>
-				<div class="form-group">
-					<label for="group" class="control-label col-xs-2">Contact</label>
-					<div class="col-xs-4">
-						<input type="text" class="form-control" th:field="*{contact}"
-							id="contact" placeholder="Numero de telephone" />
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="contact" class="control-label col-xs-2">Contact</label>
+				<div class="col-xs-4">
+					<input type="text" class="form-control" th:field="*{contact}"
+						id="contact" placeholder="Numero de telephone" />
 				</div>
+			</div>
 
-				<div class="form-group">
-					<div class="col-xs-offset-2 col-xs-4">
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-						<button type="reset" class="btn btn-default">Réinitiliaser</button>
-					</div>
+			<div class="form-group">
+				<label for="group" class="control-label col-xs-2">Groupe</label>
+				<div class="col-xs-4">
+				
+				<select class="form-control" th:field="*{groups}">
+						<option th:each="group : ${groups}" th:value="${group.id}"
+							th:text="${group.name}">group</option>
+					</select>
 				</div>
-			</form>
-		</div>
+			</div>
+			<input type="hidden" th:field="*{user}" />
+			<div class="form-group">
+				<div class="col-xs-offset-2 col-xs-4">
+					<button type="submit" class="btn btn-primary">Enregistrer</button>
+					<button type="reset" class="btn btn-default">Réinitiliaser</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>
 

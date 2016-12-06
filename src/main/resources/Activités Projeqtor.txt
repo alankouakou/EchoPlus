@@ -1,0 +1,73 @@
+Projeqtor
+---------
+*** S35
+AZCI
+    Phénix confort
+    Bug déclaration rachat partiel
+    Gestion des impayés
+    Migration AZBF (pb FTP)
+AZMG
+	bug declaration sinistres
+BankOffice
+	reunion pilotage
+
+Infobip SMS (implémentation nouveau scénario de tarification)
+LAB
+   Shift technologies
+Conf call MTN QoS Internet
+Reunion espace partenaire
+AZCF Validation cahier des charges Xts parrainage de compte et decouverts
+
+** S36 & 37 Congés
+AZCM déséquilibre balance
+Infobip SMS
+MTN QoS Internet
+formation Projeqtor 
+AZSN Anomalies déclarations sinistres
+
+*** S38
+Migration AZCF planning 0,5
+Frais sur encours 0,25
+réunion BankOffice Partenariat SG (planning déploiement) 0,25
+réunion AssurPlus 0,5 + 0,5 (réalisation script+test)
+Loan AZGH 1,5
+Automatic increase 0,5
+
+*** S39
+AZSN Annulation reglt rachat total
+AssurPlus 
+InfoBIP Sms
+Phénix confort
+
+*** s40
+Az Ghana Quotation/Statement of account/Translation
+Frais sur encours 0,5
+AssurPlus
+AZMG Analyse CDC 0,25
+
+*** S41
+conférence InfoBIP
+
+*** S42
+InfoBIP SMS
+AZGH conf call & Quotation & Automatic premium increase
+AZCM Annulation cotisation SCB
+
+*** S43
+pilotage BankOffice
+AZSN Educassur
+Frais sur encours
+
+*** S44
+AZGH UAT development review
+Espace partenaire
+pilotage BankOffice
+Migration AZBF
+
+*** S45
+InfoBIP SMS
+Frais sur encours
+AZGH
+
+*** S46 (4j)
+Mission AZGH

@@ -3,17 +3,28 @@ package com.example.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.exception.InsufficientFundsException;
 
 @Entity
 public class User implements Serializable {
 	@Id
-	private String email;
+	private String username;
 	private String password;
+	private String name;
 	private String status;
 	private int balance;
+	@ManyToOne
+	@JoinColumn(name="role_id")
+	private Role role;
+	
+	
 
 	public User() {
 		super();
@@ -22,9 +33,9 @@ public class User implements Serializable {
 		this.status = "disabled";
 	}
 
-	public User(String email, String password) {
+	public User(String username, String password) {
 		super();
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.status = "disabled";
 		this.balance = 1;
@@ -38,12 +49,20 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getName() {
+		return name;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String email) {
+		this.username = email;
 	}
 
 	public String getStatus() {
@@ -63,8 +82,16 @@ public class User implements Serializable {
 		this.balance = balance;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public String getLogin() {
-		return email;
+		return username;
 	}
 
 	public int charge(int charge) throws InsufficientFundsException {

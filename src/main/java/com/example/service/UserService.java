@@ -10,10 +10,14 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.exception.InsufficientFundsException;
+import com.example.model.Role;
 import com.example.model.User;
+import com.example.repositories.RoleRepository;
 import com.example.repositories.UserRepository;
 
 @Service
@@ -22,13 +26,15 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepo;
+	
+	@Autowired
+	RoleRepository roleRepo;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	
-	private void initUser() throws InsufficientFundsException {
-		User user = new User("admin@grio.com","password");
-		user.setBalance(5);
-		userRepo.save(user);
-	}
+
 	
 	public long count() {
 		return userRepo.count();
@@ -70,8 +76,8 @@ public class UserService {
 		return userRepo.save(arg0);
 	}
 
-	public User findByEmail(String email) {
-		return userRepo.findByEmail(email);
+	public User findByUsername(String email) {
+		return userRepo.findByUsername(email);
 	}
 	
 	

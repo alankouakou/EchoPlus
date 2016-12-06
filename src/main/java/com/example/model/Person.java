@@ -5,13 +5,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Person implements Serializable {
@@ -22,6 +22,9 @@ public class Person implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String contact;
+	@ManyToOne
+	@JoinColumn(name="account")
+	private User user;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="group_contact",joinColumns={ @JoinColumn(name="person_id")} ,inverseJoinColumns= { @JoinColumn(name="group_id")})
@@ -54,12 +57,13 @@ public class Person implements Serializable {
 	}
 
 	public void addGroup(Group group){
-		groups.add(group);
-		group.addMembre(this);
+		this.groups.add(group);
+		//group.addMember(this);
 	}
 	
 	public void removeGroup(Group group){
-		groups.remove(group);
+		this.groups.remove(group);
+		//group.removeMember(this);
 	}
 	
 	public void setGroups(Set<Group> groupes){
@@ -68,6 +72,12 @@ public class Person implements Serializable {
 	
 	public Set<Group> getGroups(){
 		return this.groups;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

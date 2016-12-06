@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +25,7 @@ import com.example.model.Sms;
 import com.example.repositories.GroupRepository;
 import com.example.repositories.PersonRepository;
 import com.example.service.MessageService;
+import com.example.service.UserService;
 import com.example.util.SmsTool;
 
 import infobip.api.client.SendSingleTextualSms;
@@ -36,6 +40,9 @@ public class IndexController {
 
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private UserService userService;
 
 	
 	@Autowired
@@ -48,10 +55,14 @@ public class IndexController {
 	private GroupRepository groupRepository;
 
 	@RequestMapping("/")
-	public String index(Model model) {
+	public String index(Model model, Principal principal) {
 		ArrayList<Group> groupes = (ArrayList<Group>) groupRepository.findAll();
 		model.addAttribute("groupes", groupes);
-		model.addAttribute("username", "Trésor");
+		if(principal == null){
+			model.addAttribute("username", "Invité");
+		} else {
+			model.addAttribute("username", principal.getName());
+		}
 
 		return "index";
 	}
@@ -73,26 +84,6 @@ public class IndexController {
 		return "personview";
 	}
 
-	@RequestMapping(value = "/newcontact", method = RequestMethod.GET)
-	public String showPerson(Model model) {
-		Person p = new Person();
-		model.addAttribute("person", p);
-		return "register-form";
-	}
-
-	@RequestMapping(value = "/newcontact", method = RequestMethod.POST)
-	public String savePerson(@ModelAttribute("person") Person person) {
-		personRepository.save(person);
-		return "redirect:/listcontacts";
-	}
-
-	@RequestMapping(value = "/listcontacts", method = RequestMethod.GET)
-	public String listContacts(Model model) {
-		ArrayList<Person> persons = (ArrayList<Person>) personRepository.findAll();
-		model.addAttribute("persons", persons);
-		return "listcontacts";
-	}
-
 	@RequestMapping("/compose")
 	public String composeSms(Model model) {
 		Sms message = new Sms();
@@ -110,12 +101,14 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
-	public String sendSms(@ModelAttribute("sms") Sms sms, Model model) throws InsufficientFundsException {
+	public String sendSms(@ModelAttribute("sms") Sms sms, Model model, Principal principal) throws InsufficientFundsException {
 		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
 		if (destinataires.size() > 0) {
 			User user = new User();
+			user = userService.findByUsername(principal.getName());
 			SMSResponseDetails sentMessageInfo = messageService.sendSms(account, user, sms);
 			model.addAttribute("sentMessageInfo", sentMessageInfo);
+			model.addAttribute("balance",user.getBalance());
 			System.out.println("Message ID: " + sentMessageInfo.getMessageId());
 			System.out.println("Receiver: " + sentMessageInfo.getTo());
 			System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
@@ -128,5 +121,14 @@ public class IndexController {
 			return "compose";
 		}
 	}
-
+	
+	@RequestMapping(value="/login",method=RequestMethod.GET)
+	public String loginForm(){
+		return "login";
+	}
+	
+	@RequestMapping("/403")
+	public String forbidden(){
+		return "forbidden";
+	}
 }

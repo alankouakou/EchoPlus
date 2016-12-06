@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,26 +20,28 @@ public class Group implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private String designation;
+	private String name;
+	@ManyToOne
+	@JoinColumn(name="account")
+	private User user;	
 	
 	@ManyToMany(fetch=FetchType.LAZY,mappedBy="groups")
-	private Set<Person> membres;
+	private Set<Person> members;
 	
-	public Set<Person> getMembres() {
-		return membres;
+	public Set<Person> getMembers() {
+		return members;
 	}
 	
-	public void setMembres(Set<Person> persons){
-		this.membres = persons;
+	public void setMembers(Set<Person> persons){
+		this.members = persons;
 	}
 	
-	public void removeMembre(Person person){
-		this.membres.remove(person);
+	public void removeMember(Person person){
+		this.members.remove(person);
 	}
 	
-	public void addMembre(Person membre) {
-		membre.addGroup(this);
-		membres.add(membre);
+	public void addMember(Person member) {
+		members.add(member);
 	}
 	public Long getId() {
 		return id;
@@ -45,11 +49,19 @@ public class Group implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getDesignation() {
-		return designation;
+	public String getName() {
+		return name;
 	}
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

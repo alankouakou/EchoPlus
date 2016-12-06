@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Person;
+import com.example.model.User;
 import com.example.repositories.PersonRepository;
 import com.example.repositories.UserRepository;
 
@@ -60,6 +62,10 @@ public class PersonService {
 		return personRepository.save(arg0);
 	}
 	
+	
+	public List<Person> findByUser(User user, Sort sort){
+		return personRepository.findByUser(user, sort);
+	}
 	
 	
 	

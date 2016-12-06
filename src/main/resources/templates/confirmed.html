@@ -17,9 +17,11 @@
 	<div class="container-fluid">
 			<p>
 				 Message envoyé!<br /> Expediteur : <span
-					th:text="${sms.from}"></span><br /> destinataire: <span
-					th:text="${sms.to}"></span><br /> Message: <span
-					th:text="${sms.text}"></span>
+					th:text="${sms.from}"></span><br /> 
+					destinataire: <span	th:text="${sms.to}"></span><br /> 
+					Message: <span th:text="${sms.text}"></span><br />
+					Message ID: <span th:unless="${sentMessageInfo.messageId == null}" th:text="${sentMessageInfo.messageId}"></span><br />
+					Nouveau solde : <span th:unless="${balance == null}" th:text="${balance}"></span>
 			</p>
 	</div>
 

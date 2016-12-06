@@ -29,7 +29,7 @@ UserService userService;
 
 	public SMSResponseDetails sendSms(Account account, User user, Sms sms) throws InsufficientFundsException {
 		
-		user=userService.findByEmail("admin@grio.com");
+		//user=userService.findByUsername(user.getUsername());
 		SMSResponseDetails sentMessageInfo = new SMSResponseDetails();
 		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
 		
