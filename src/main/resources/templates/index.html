@@ -12,12 +12,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	<nav th:replace="fragments/header :: header"></nav>
 	<div class="jumbotron">
 		<div class="container-fluid">
-			<h1 class="text-success">Communiquez efficacement!</h1>
-			<p><span th:text="#{template.welcome(${username})}">Touchez votre cible à chaque fois!</span></p>
+		<p></p>
+		<div sec:authorize="isAnonymous()">
+			<h2><span th:text="#{template.welcome}">Vous êtes nouveau?</span></h2>
 			<p>
-				<a href="#" th:href="@{/compose}" class="btn btn-info btn-lg">Essayer
-					la solution!</a>
+				<a href="#" class="btn btn-info btn-lg">Créez votre compte!</a>
 			</p>
+			</div>
+			<div sec:authorize="isAuthenticated()">
+			<h2 class="text-info">Bienvenue <span sec:authentication="name">visiteur</span></h2>
+			</div>
 		</div>
 	</div>
 
@@ -32,7 +36,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 				<p>Creez vos campagnes et envoyez vos SMS au bon moment!</p>
 
 				<p>
-					<a th:href="@{/compose}" class="btn btn-warning">Nouvelle
+					<a sec:authorize="isAuthenticated()" th:href="@{/compose}" class="btn btn-warning">Nouvelle
 						campagne</a>
 				</p>
 
@@ -40,9 +44,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 			<div class="col-xs-4">
 
-				<h2>Mes groupes</h2>
+				<h2>Mes listes de contacts</h2>
 
-				<p>Créez vos groupes pour mieux organiser vos campagnes</p>
+				<p>Créez et organisez vos contacts par groupe</p>
 				<p>
 					<a sec:authorize="isAuthenticated()" href="#" th:href="@{/groups/list}" class="btn btn-warning">liste
 						groupes</a>
@@ -53,7 +57,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 				<h2>Mes contacts</h2>
 
-				<p>Enregistrez vos contacts en 1 clic!</p>
+				<p>Enregistrez vos contacts ou importez vos contacts depuis un fichier!</p>
 
 				<p>
 					<a sec:authorize="isAuthenticated()" href="#" th:href="@{/contacts/list}" class="btn btn-warning">liste

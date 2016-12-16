@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.Arrays;
+
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
@@ -9,10 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.exception.InsufficientFundsException;
 import com.example.model.Group;
+import com.example.model.RequestStatus;
 import com.example.model.Role;
 import com.example.model.User;
 import com.example.repositories.GroupRepository;
 import com.example.repositories.RoleRepository;
+import com.example.repositories.StatusRepo;
 import com.example.repositories.UserRepository;
 
 @Service
@@ -30,6 +34,9 @@ public class DBInitializer {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	StatusRepo statusRepo;
 
 	@PostConstruct
 	public void initUser() throws InsufficientFundsException {
@@ -62,7 +69,15 @@ public class DBInitializer {
 			adminGroup.setUser(admin);
 			adminGroup.setName("Tous les contacts");
 			groupRepo.save(adminGroup);
-
 		}
+		
+		if( statusRepo.count() == 0 ){
+			RequestStatus nouveau = new RequestStatus("NEW");
+			RequestStatus annulé = new RequestStatus("CANCELLED");
+			RequestStatus rejeté = new RequestStatus("REJECTED");
+			RequestStatus validé = new RequestStatus("RECHARGED");
+			statusRepo.save(Arrays.asList(nouveau, annulé, rejeté, validé));
+		}
+
 	}
 }

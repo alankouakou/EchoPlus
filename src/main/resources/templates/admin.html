@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Notifier v1.0 - Administration</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/css/mystyle.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap.js"></script>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"></nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+			<h2 class="text-success">Taches d'administration</h2>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<div class="col-xs-4">
+
+				<h3>Gestion des rechargements</h3>
+				<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning" href="#" th:href="@{/admin/refills}">Liste des demandes</a>
+
+			</div>
+
+			<div class="col-xs-4">
+
+				<h3>Gestion des utilisateurs</h3>
+				<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning" href="#">Créer un compte utilisateur</a>
+
+			</div>
+
+			<div class="col-xs-4">
+
+				<h3>Gestion des profils</h3>
+<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-warning" href="#">Créer un profil</a>
+
+
+			</div>
+
+		</div>
+
+		<div th:replace="fragments/footer::footer"></div>
+	</div>
+</body>
+</html>

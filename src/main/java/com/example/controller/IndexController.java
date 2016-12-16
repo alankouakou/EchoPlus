@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -21,10 +22,12 @@ import com.example.model.User;
 import com.example.model.Account;
 import com.example.model.Group;
 import com.example.model.Person;
+import com.example.model.RefillRequest;
 import com.example.model.Sms;
 import com.example.repositories.GroupRepository;
 import com.example.repositories.PersonRepository;
 import com.example.service.MessageService;
+import com.example.service.RefillService;
 import com.example.service.UserService;
 import com.example.util.SmsTool;
 
@@ -40,11 +43,13 @@ public class IndexController {
 
 	@Autowired
 	private MessageService messageService;
-	
+
 	@Autowired
 	private UserService userService;
 
-	
+	@Autowired
+	private RefillService refillService;
+
 	@Autowired
 	private Account account;
 
@@ -58,7 +63,7 @@ public class IndexController {
 	public String index(Model model, Principal principal) {
 		ArrayList<Group> groupes = (ArrayList<Group>) groupRepository.findAll();
 		model.addAttribute("groupes", groupes);
-		if(principal == null){
+		if (principal == null) {
 			model.addAttribute("username", "Invité");
 		} else {
 			model.addAttribute("username", principal.getName());
@@ -68,7 +73,11 @@ public class IndexController {
 	}
 
 	@RequestMapping("/activites")
-	public String acivites() {
+	public String acivites(Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		List<RefillRequest> refills = refillService.findByUser(user);
+		model.addAttribute("balance",user.getBalance());
+		model.addAttribute("refills", refills);
 		return "infoscompte";
 	}
 
@@ -101,34 +110,36 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
-	public String sendSms(@ModelAttribute("sms") Sms sms, Model model, Principal principal) throws InsufficientFundsException {
+	public String sendSms(@ModelAttribute("sms") Sms sms, Model model, Principal principal)
+			throws InsufficientFundsException {
 		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
 		if (destinataires.size() > 0) {
 			User user = new User();
 			user = userService.findByUsername(principal.getName());
 			SMSResponseDetails sentMessageInfo = messageService.sendSms(account, user, sms);
 			model.addAttribute("sentMessageInfo", sentMessageInfo);
-			model.addAttribute("balance",user.getBalance());
+			model.addAttribute("balance", user.getBalance());
 			System.out.println("Message ID: " + sentMessageInfo.getMessageId());
 			System.out.println("Receiver: " + sentMessageInfo.getTo());
 			System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
-			System.out.println("Credit utilisé :" + destinataires.size() + " sms");			
-			System.out.println("Solde du compte: "+user.getBalance());
-			//System.out.println("Message status: " + sentMessageInfo.getStatus().getName());
+			System.out.println("Credit utilisé :" + destinataires.size() + " sms");
+			System.out.println("Solde du compte: " + user.getBalance());
+			// System.out.println("Message status: " +
+			// sentMessageInfo.getStatus().getName());
 			System.out.println(destinataires.toString());
 			return "confirmed";
 		} else {
 			return "compose";
 		}
 	}
-	
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String loginForm(){
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginForm() {
 		return "login";
 	}
-	
+
 	@RequestMapping("/403")
-	public String forbidden(){
+	public String forbidden() {
 		return "forbidden";
 	}
 }

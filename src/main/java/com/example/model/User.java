@@ -99,4 +99,9 @@ public class User implements Serializable {
 		this.setBalance(solde);
 		return solde;
 	}
+	
+	@Override
+	public String toString(){
+		return username;
+	}
 }

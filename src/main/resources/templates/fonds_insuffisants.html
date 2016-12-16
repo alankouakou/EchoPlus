@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Notifier v1.0 - Fonds insuffisants </title>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/css/mystyle.css" rel="stylesheet" type="text/css" />
+<script src="/js/bootstrap.js"></script>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"></nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+			<h2 class="text-alert">Fonds insuffisants!</h2>
+
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<h2 class="text-success"> Le compte utilisé n'a pas suffisamment de fonds pour cette opération! </h2> 
+
+		</div>
+
+		<div th:replace="fragments/footer::footer"></div>
+	</div>
+</body>
+</html>
