@@ -7,11 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +41,6 @@ import infobip.api.model.sms.mt.send.SMSResponseDetails;
 import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
 
 @Controller
-
 public class IndexController {
 
 	@Autowired
@@ -73,14 +75,16 @@ public class IndexController {
 	}
 
 	@RequestMapping("/activites")
-	public String acivites(Model model, Principal principal) {
+	public String activites(Model model, Pageable p, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
-		List<RefillRequest> refills = refillService.findByUser(user);
+		Page<RefillRequest> refills = refillService.findByUser(user,p);
 		model.addAttribute("balance",user.getBalance());
-		model.addAttribute("refills", refills);
+		model.addAttribute("page", refills);
 		return "infoscompte";
 	}
 
+
+	
 	@RequestMapping("/hello")
 	@ResponseBody
 	public String home() {

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import com.example.model.Account;
@@ -24,7 +25,7 @@ public class MybootApplication {
 	private static final String LOCATION = "/static/upload/";
 
 	// 10MB : Max file size.
-	private static final long MAX_FILE_SIZE = 10485760;
+	private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 	// Beyond that size spring will throw exception.
 	// 20MB : Total request size containing Multipart.
@@ -36,7 +37,18 @@ public class MybootApplication {
 	@Autowired
 	private Environment env;
 
-	@Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() throws IOException{
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+         
+        //Set the maximum allowed size (in bytes) for each individual file.
+        multipartResolver.setMaxUploadSizePerFile(MAX_FILE_SIZE);
+         
+        //You may also set other available properties.
+         
+        return multipartResolver;
+    }
+	
+	@Bean(name="multipartResolver")
 	public StandardServletMultipartResolver getResolver() throws IOException {
 		StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();
 		return resolver;

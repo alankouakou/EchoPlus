@@ -37,11 +37,15 @@
 
 					<li class="active"><a href="#">Accueil</a></li>
 
-					<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">Administration</a></li>
-					<li><a sec:authorize="hasRole('ROLE_USER')" href="#">Mon tableau de bord</a></li>
-					<li><a sec:authorize="hasRole('ROLE_USER')" href="#"  th:href="@{/users/refill}"><span class="glyphicon glyphicon-list"></span>
-							Recharger son compte</a></li>
-					<li><a sec:authorize="isAuthenticated()" href="#" th:href="@{/users/password/change}">Changer votre mot de passe</a></li>		
+					<li><a sec:authorize="hasRole('ROLE_ADMIN')"
+						th:href="@{/admin}">Administration</a></li>
+					<li><a sec:authorize="hasRole('ROLE_USER')" href="#">Mon
+							tableau de bord</a></li>
+					<li><a sec:authorize="hasRole('ROLE_USER')" href="#"
+						th:href="@{/users/refill}"><span
+							class="glyphicon glyphicon-list"></span> Recharger son compte</a></li>
+					<li><a sec:authorize="isAuthenticated()" href="#"
+						th:href="@{/users/password/change}">Changer votre mot de passe</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -49,7 +53,8 @@
 						sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" href="#"
 						th:href="@{/activites}"><span class="glyphicon glyphicon-user"></span>
 							<span sec:authentication="name"></span></a></li>
-					<li sec:authorize="isAuthenticated()"><a 
+					<li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"><a href="#"> <span th:unless="${balance ==null}" class="glyphicon glyphicon-usd"></span> <span th:unless="${balance == null}" th:text="${#numbers.formatInteger(balance,3,'WHITESPACE')}" >9,000</span></a></li>
+					<li sec:authorize="isAuthenticated()"><a
 						href="javascript:document.getElementById('logout').submit()"><span
 							class="glyphicon glyphicon-off"></span> Quitter </a>
 						<form id="logout" th:action="@{/logout}" method="post"></form></li>
