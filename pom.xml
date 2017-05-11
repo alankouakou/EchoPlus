@@ -72,12 +72,16 @@
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 			<version>2.1.2.RELEASE</version>
 		</dependency>
-
+		<dependency>
+		<groupId>org.hsqldb</groupId>
+		<artifactId>hsqldb</artifactId>
+		</dependency>
+<!-- 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-
+ -->
 		<!-- For user input validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -101,7 +105,24 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.8</version>
+		</dependency>
+		<!-- excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.12</version>
+		</dependency>
+		<!-- excel 2007 over -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>

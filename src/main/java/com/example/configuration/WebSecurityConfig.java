@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
 		.usersByUsernameQuery("select username,password,true from User where username=?")
-		.authoritiesByUsernameQuery("select u.username, r.name from User u, role r where u.role_id=r.id and username=?")
+		.authoritiesByUsernameQuery("select u.username, r.name from user u, role r where u.role_id=r.id and u.username=?")
 		.passwordEncoder(new BCryptPasswordEncoder());
 		// En phase de test
 		//auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN")

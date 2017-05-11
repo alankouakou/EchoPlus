@@ -24,7 +24,7 @@ import com.example.util.FileValidator;
 @Controller
 public class FileUploadController {
 
-	private static String UPLOAD_LOCATION = "G:/uploads/";
+	private static String UPLOAD_LOCATION = "C:/uploads/";
 
 	@Autowired
 	private FileValidator fileValidator;

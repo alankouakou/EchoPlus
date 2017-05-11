@@ -2,6 +2,8 @@ package com.example.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,8 +15,14 @@ public interface RefillRepo extends JpaRepository<RefillRequest, Long>{
 
 	List<RefillRequest> findByUserOrderByDateCreatedDesc(User user);
 	
+	Page<RefillRequest> findByUser(User user, Pageable page);
+	
 	List<RefillRequest> findAll(Sort sort);
+	
+	Page<RefillRequest> findAll(Pageable page);
+	
+	Page<RefillRequest> findByUserOrderByDateCreatedDesc(User user, Pageable page);
 
-	List<RefillRequest> findByStatusOrderByDateCreatedDesc(RequestStatus status);
+	Page<RefillRequest> findByStatusOrderByDateCreatedDesc(RequestStatus status, Pageable page);
 
 }

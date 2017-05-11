@@ -21,7 +21,6 @@ public class User implements Serializable {
 	private String status;
 	private int balance;
 	@ManyToOne
-	@JoinColumn(name="role_id")
 	private Role role;
 	
 	

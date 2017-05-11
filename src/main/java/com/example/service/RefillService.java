@@ -6,6 +6,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -38,14 +41,19 @@ public class RefillService {
 		return refillRepo.findAll(new Sort(Direction.DESC, "DateCreated"));
 	}
 
-	public List<RefillRequest> findNewRefillRequests() {
+	public Page<RefillRequest> findNewRefillRequests(Pageable p) {
 		RequestStatus status = statusRepo.getOne(1l);
-		return refillRepo.findByStatusOrderByDateCreatedDesc(status);
+		return refillRepo.findByStatusOrderByDateCreatedDesc(status, p);
 	}
 
-	public List<RefillRequest> findByUser(User user) {
-		return refillRepo.findByUserOrderByDateCreatedDesc(user);
+	public Page<RefillRequest> findByUser(User user, Pageable page) {
+		return refillRepo.findByUserOrderByDateCreatedDesc(user, page);
 	}
+	
+	public Page<RefillRequest> findAll(Pageable page){
+		return refillRepo.findAll(page);
+	}
+	
 
 	public <S extends RefillRequest> S save(S arg0) {
 		return refillRepo.save(arg0);

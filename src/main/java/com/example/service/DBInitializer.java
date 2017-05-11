@@ -48,7 +48,7 @@ public class DBInitializer {
 			Role roleUser = new Role("ROLE_USER");
 			roleRepo.save(roleUser);
 
-			User user = new User("user", passwordEncoder.encode("user2016123"));
+			User user = new User("user", passwordEncoder.encode("user"));
 			user.setName("Invité");
 			user.setBalance(10);
 			user.setRole(roleUser);
@@ -59,7 +59,7 @@ public class DBInitializer {
 			userGroup.setName("Tous les contacts");
 			groupRepo.save(userGroup);
 
-			User admin = new User("admin", passwordEncoder.encode("admin2016123"));
+			User admin = new User("admin", passwordEncoder.encode("admin"));
 			admin.setBalance(50);
 			admin.setName("Administrateur");
 			admin.setRole(roleAdmin);
