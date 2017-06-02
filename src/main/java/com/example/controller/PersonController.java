@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.model.Group;
 import com.example.model.Person;
@@ -20,6 +21,7 @@ import com.example.service.GroupService;
 import com.example.service.PersonService;
 import com.example.service.UserService;
 
+@SessionAttributes("user")
 @Controller
 @RequestMapping("/contacts")
 public class PersonController {

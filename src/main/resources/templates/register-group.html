@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Enregistrer un groupe</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
@@ -17,29 +17,30 @@
 	</div>
 
 	<div class="container-fluid">
+		<div layout:fragment="content">
+			<form action="#" class="form-horizontal" th:action="@{/groups/new}"
+				th:object="${group}" method="POST">
 
-					<form action="#" class="form-horizontal" th:action="@{/groups/new}"
-						th:object="${group}" method="POST">
-
-						<div class="form-group">
-							<label for="name" class="control-label col-xs-2">Nom groupe:</label>
-							<div class="col-xs-4">
-								<input type="text" class="form-control" th:field="*{name}"
-									id="name" placeholder="Nom" />
-							</div>
-						</div>
-						<input type="hidden" th:field="*{user}" />
-						<div class="form-group">
-							<div class="col-xs-offset-2 col-xs-4">
-								<button type="submit" class="btn btn-primary">Enregistrer</button>
-								<button type="reset" class="btn btn-default">Réinitiliaser</button>
-							</div>
-						</div>
-					</form>
+				<div class="form-group">
+					<label for="name" class="control-label col-xs-2">Nom
+						groupe:</label>
+					<div class="col-xs-4">
+						<input type="text" class="form-control" th:field="*{name}"
+							id="name" placeholder="Nom" />
+					</div>
 				</div>
+				<input type="hidden" th:field="*{user}" />
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-4">
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+						<button type="reset" class="btn btn-default">Réinitiliaser</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
-
-<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

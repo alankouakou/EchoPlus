@@ -14,7 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.TemplateResolver;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
 @EnableWebSecurity
@@ -26,9 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public SpringTemplateEngine templateEngine(
-	TemplateResolver templateResolver) {
+	SpringResourceTemplateResolver templateResolver) {
 	SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 	templateEngine.setTemplateResolver(templateResolver);
+	templateEngine.addDialect(new LayoutDialect());
 	templateEngine.addDialect(new SpringSecurityDialect());
 	return templateEngine;
 	}
@@ -58,9 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout()
 		.logoutUrl("/logout")	
-		.logoutSuccessUrl("/")		
+		.logoutSuccessUrl("/login?logout")		
 		.and()
-		.authorizeRequests().antMatchers("/compose").authenticated()
+		.authorizeRequests().antMatchers("/").authenticated()
 		.antMatchers(HttpMethod.POST,"/send").hasAnyRole("USER","ADMIN")
 		.anyRequest().permitAll()
 		.and()

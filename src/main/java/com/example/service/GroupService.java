@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Group;
@@ -76,6 +77,11 @@ public class GroupService {
 
 	public List<Group> findByUser(User user, Sort sort) {
 		return groupRepository.findByUser(user, sort);
+	}
+	
+	public List<Person> findMembers(long id){
+		Group groupe = groupRepository.findOne(id);
+		return personRepo.findByGroupsContaining(groupe, new Sort(Sort.Direction.ASC,"lastName","firstName"));
 	}
 	
 

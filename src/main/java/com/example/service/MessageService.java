@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.exception.InsufficientFundsException;
 import com.example.model.Account;
+import com.example.model.ResponseDetails;
 import com.example.model.Sms;
 import com.example.model.User;
 import com.example.util.SmsTool;
@@ -23,17 +25,21 @@ import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
 @Transactional
 public class MessageService {
 
-@Autowired
-UserService userService;
+	@Autowired
+	private UserService userService;
 
+	@Autowired
+	private ResponseDetailsService rdService;
+
+	private List<ResponseDetails> rds= new ArrayList<ResponseDetails>();
 
 	public SMSResponseDetails sendSms(Account account, User user, Sms sms) throws InsufficientFundsException {
-		
-		//user=userService.findByUsername(user.getUsername());
+
+		// user=userService.findByUsername(user.getUsername());
 		SMSResponseDetails sentMessageInfo = new SMSResponseDetails();
+		List<SMSResponseDetails> msgResponses;
 		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
-		
-		
+
 		if (user.getBalance() > destinataires.size()) {
 
 			System.out.println(account.getLogin() + ":" + account.getPassword());
@@ -48,9 +54,25 @@ UserService userService;
 			// Mise à jour du solde du compte
 			SMSResponse response = client.execute(requestBody);
 			sentMessageInfo = response.getMessages().get(0);
+			msgResponses = response.getMessages();
+
+			for (SMSResponseDetails mi : msgResponses) {
+				ResponseDetails rd = new ResponseDetails(mi.getMessageId(), mi.getSmsCount(), mi.getStatus().getName(),
+						sms.getFrom(), mi.getTo());
+				rds.add(rd);
+			}
+			// Enregistrement details envoi
+			rdService.save(rds);
+			
 			user.charge(destinataires.size() * sentMessageInfo.getSmsCount());
+
 			userService.save(user);
 			System.out.println("Message envoyé! Nouveau solde :" + user.getBalance());
+			System.out.println(new BasicAuthConfiguration(account.getLogin(), account.getPassword()).getAuthorizationHeader());
+			System.out.println("----- details ------");
+			for (ResponseDetails r : rds) {
+				System.out.println("Details reponse:" + r);
+			}
 		}
 		return sentMessageInfo;
 	}

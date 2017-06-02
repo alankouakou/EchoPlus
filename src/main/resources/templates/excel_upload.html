@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org">
+<html xmlns:layout="www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Insert title here</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav th:replace="fragments/header::header"></nav>
@@ -16,71 +16,84 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							<span th:text="${message}"></span>
-						</h3>
-					</div>
-					<div class="panel-body">
-						<form action="#" th:action="@{/import-xls}" method="POST"
-							th:object="${fileBucket}" class="form-inline"
-							enctype="multipart/form-data">
-							<div class="form-group col-md-7">
-								<label class="col-md-5 control-label" for="file">Charger
-									le fichier excel :</label>
-								<div class="col-xs-4">
-									<input type="file" th:field="*{file}" id="file"
-										class="form-control input-sm" />
+		<div layout:fragment="content">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<span th:text="${message}"></span>
+							</h3>
+						</div>
+						<div class="panel-body">
+							<form action="#" th:action="@{/import-xls}" method="POST"
+								th:object="${fileBucket}" class="form-inline"
+								enctype="multipart/form-data">
+								<div class="form-group col-md-12">
+									<label class="col-md-5 control-label" for="file">Charger
+										le fichier excel :</label>
+									<div class="col-md-7">
+										<input type="file" th:field="*{file}" id="file"
+											class="form-control" />
+									</div>
 								</div>
-							</div>
-							<div class="form-actions float-right">
-								<input type="submit" value="uploader"
-									class="btn btn-primary btn-sm" />
-							</div>
-						</form>
+								<div class="form-group col-md-12">
+									<label class="col-md-5 control-label" for="groupe">Charger
+										le fichier excel :</label>
+									<div class="col-md-7">
+										<select name="groupe" th:field="*{groupe}" id="groupe"
+											class="form-control">
+											<option th:each="g: ${groupes}" th:text="${g.name}"
+												th:value="${g.id}" />
+										</select>
+									</div>
+								</div>
+								<div class="form-actions float-right">
+									<input type="submit" value="uploader"
+										class="btn btn-primary btn-sm" />
+								</div>
+							</form>
 
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<div class="panel panel-default" th:if="${lstPerson == null}">
-					<div class="panel-heading">
-						<h3 class="panel-title"></h3>
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="panel panel-default" th:if="${lstPerson == null}">
+						<div class="panel-heading">
+							<h3 class="panel-title"></h3>
+						</div>
+						<div class="panel-body">
+							<p>Pas de contacts importés!</p>
+						</div>
 					</div>
-					<div class="panel-body">
-						<p>Pas de contacts importés!</p>
-					</div>
-				</div>
-				<div class="panel panel-default" th:unless="${lstPerson == null}">
-					<div class="panel-heading">
-						<h3 class="panel-title">Contacts à importer</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>nom</th>
-									<th>prenom</th>
-									<th>numero</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="p:${lstPerson}">
-									<td><span th:text="${p.id}"></span></td>
-									<td><span th:text="${p.firstName}"></span></td>
-									<td><span th:text="${p.lastName}"></span></td>
-									<td><span th:text="${p.contact}"></span></td>
-								</tr>
-							</tbody>
+					<div class="panel panel-default" th:unless="${lstPerson == null}">
+						<div class="panel-heading">
+							<h3 class="panel-title">Contacts à importer</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>nom</th>
+										<th>prenom</th>
+										<th>numero</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="p:${lstPerson}">
+										<td><span th:text="${p.id}"></span></td>
+										<td><span th:text="${p.lastName}"></span></td>
+										<td><span th:text="${p.firstName}"></span></td>
+										<td><span th:text="${p.contact}"></span></td>
+									</tr>
+								</tbody>
 
-						</table>
+							</table>
 
+						</div>
 					</div>
 				</div>
 			</div>

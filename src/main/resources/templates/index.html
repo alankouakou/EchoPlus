@@ -1,103 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:layout="http://www.ultraq.net.nz/thymelaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
-<title>Notifier v1.0</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="/css/mystyle.css" rel="stylesheet" type="text/css" />
-<script src="/js/bootstrap.js"></script>
+<title>Accueil</title>
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
-	<div class="jumbotron">
+	<div layout:fragment="content">
+		<div class="jumbotron">
+			<div class="container-fluid">
+				<p></p>
+				<div sec:authorize="isAnonymous()">
+					<h2>
+						<span th:text="#{template.welcome}">Vous êtes nouveau?</span>
+					</h2>
+					<p>
+						<a href="#" class="btn btn-info btn-lg">Créez votre compte!</a>
+					</p>
+				</div>
+				<div sec:authorize="isAuthenticated()">
+					<h2 class="text-info">
+						Bienvenue <span sec:authentication="name">visiteur</span>
+					</h2>
+				</div>
+			</div>
+		</div>
+
 		<div class="container-fluid">
-			<p></p>
-			<div sec:authorize="isAnonymous()">
-				<h2>
-					<span th:text="#{template.welcome}">Vous êtes nouveau?</span>
-				</h2>
-				<p>
-					<a href="#" class="btn btn-info btn-lg">Créez votre compte!</a>
-				</p>
-			</div>
-			<div sec:authorize="isAuthenticated()">
-				<h2 class="text-info">
-					Bienvenue <span sec:authentication="name">visiteur</span>
-				</h2>
-			</div>
-		</div>
-	</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Contacts</h3>
+						</div>
+						<div class="panel-body">
+							<p>Enregistrez vos contacts ou importez vos contacts depuis
+								un fichier!</p>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Contacts</h3>
+							<p>
+								<a sec:authorize="isAuthenticated()" href="#"
+									th:href="@{/contacts/list}" class="btn btn-warning">liste
+									contacts</a> <a sec:authorize="isAuthenticated()" href="#"
+									th:href="@{/import-xls}" class="btn btn-warning">importez
+									vos contacts</a>
+							</p>
+						</div>
 					</div>
-					<div class="panel-body">
-						<p>Enregistrez vos contacts ou importez vos contacts depuis un
-							fichier!</p>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Groupes</h3>
+						</div>
+						<div class="panel-body">
+							<p>Créez et organisez vos contacts par groupe</p>
+							<p>
+								<a sec:authorize="isAuthenticated()" href="#"
+									th:href="@{/groups/list}" class="btn btn-warning">liste
+									groupes</a>
+							</p>
+						</div>
+					</div>
+				</div>
 
-						<p>
-							<a sec:authorize="isAuthenticated()" href="#"
-								th:href="@{/contacts/list}" class="btn btn-warning">liste
-								contacts</a>
-						</p>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Gestion compte</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Groupes</h3>
-					</div>
-					<div class="panel-body">
-						<p>Créez et organisez vos contacts par groupe</p>
-						<p>
-							<a sec:authorize="isAuthenticated()" href="#"
-								th:href="@{/groups/list}" class="btn btn-warning">liste
-								groupes</a>
-						</p>
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Historique</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
 					</div>
 				</div>
-			</div>
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Campagnes</h3>
+						</div>
+						<div class="panel-body">
+							<p>
+								<a sec:authorize="isAuthenticated()" th:href="@{/compose}"
+									class="btn btn-warning">Nouvelle campagne</a>
+							</p>
+						</div>
+					</div>
+				</div>
 
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Gestion compte</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Historique</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Campagnes</h3>
-					</div>
-					<div class="panel-body">
-<p>
-					<a sec:authorize="isAuthenticated()" th:href="@{/compose}"
-						class="btn btn-warning">Nouvelle campagne</a>
-				</p>
-</div>
-				</div>
 			</div>
 
 		</div>
-		
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

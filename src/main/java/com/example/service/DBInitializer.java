@@ -59,7 +59,7 @@ public class DBInitializer {
 			userGroup.setName("Tous les contacts");
 			groupRepo.save(userGroup);
 
-			User admin = new User("admin", passwordEncoder.encode("admin"));
+			User admin = new User("admin", passwordEncoder.encode("admin4477"));
 			admin.setBalance(50);
 			admin.setName("Administrateur");
 			admin.setRole(roleAdmin);

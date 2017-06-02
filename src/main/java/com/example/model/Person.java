@@ -1,6 +1,7 @@
 package com.example.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class Person implements Serializable {
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="group_contact",joinColumns={ @JoinColumn(name="person_id")} ,inverseJoinColumns= { @JoinColumn(name="group_id")})
-	private Set<Group> groups;
+	private Set<Group> groups = new HashSet();
 	
 	
 	public Long getId() {

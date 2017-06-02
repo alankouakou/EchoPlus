@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymelaef.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
-<title>Notifier v1.0</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<title>Enregistrer un contact</title>
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
@@ -17,6 +16,7 @@
 	</div>
 
 	<div class="container-fluid">
+	<div layout:fragment="content">
 		<form action="#" class="form-horizontal" th:action="@{/contacts/new}"
 			th:object="${person}" method="post">
 
@@ -60,6 +60,7 @@
 				</div>
 			</div>
 		</form>
+		</div>
 	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Notifier v1.0</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
@@ -15,42 +14,43 @@
 		</div>
 	</div>
 
+	<div layout:fragment="content">
 
-	<div class="container-fluid">
-		<form action="#" class="form-horizontal" th:action="@{/send}"
-			th:object="${sms}" method="post">
+		<div class="container-fluid">
+			<form action="#" class="form-horizontal" th:action="@{/send}"
+				th:object="${sms}" method="post">
 
-			<div class="form-group">
-				<label for="from" class="control-label col-md-2 col-sm-2">Expéditeur</label>
-				<div class="col-md-4 col-sm-10">
-					<input type="text" class="form-control" th:field="*{from}"
-						id="from" placeholder="Expediteur" />
+				<div class="form-group">
+					<label for="from" class="control-label col-md-2 col-sm-2">Expéditeur</label>
+					<div class="col-md-4 col-sm-10">
+						<input type="text" class="form-control" th:field="*{from}"
+							id="from" placeholder="Expediteur" />
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="to" class="control-label col-md-2 col-sm-2">Destinataires</label>
-				<div class="col-md-4 col-sm-10">
-					<input type="text" class="form-control" th:field="*{to}" id="to"
-						placeholder="contact_1,contact_2,..,contact_n" />
+				<div class="form-group">
+					<label for="to" class="control-label col-md-2 col-sm-2">Destinataires</label>
+					<div class="col-md-4 col-sm-10">
+						<input type="text" class="form-control" th:field="*{to}" id="to"
+							placeholder="contact_1,contact_2,..,contact_n" />
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="message" class="control-label col-md-2 col-sm-2">Message</label>
-				<div class="col-md-4 col-sm-10">
-					<textarea rows="5" class="form-control" th:field="*{text}"
-						id="message" placeholder="Tapez votre message..."></textarea>
+				<div class="form-group">
+					<label for="message" class="control-label col-md-2 col-sm-2">Message</label>
+					<div class="col-md-4 col-sm-10">
+						<textarea rows="5" class="form-control" th:field="*{text}"
+							id="message" placeholder="Tapez votre message..." maxlength="160"></textarea>
+					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-4 col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary">Envoyer</button>
-					<button type="reset" class="btn btn-default">Réinitiliaser</button>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-4 col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Envoyer</button>
+						<button type="reset" class="btn btn-default">Réinitiliaser</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-
 	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

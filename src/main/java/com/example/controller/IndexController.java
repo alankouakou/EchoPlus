@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.MybootApplication;
 import com.example.exception.InsufficientFundsException;
@@ -41,6 +42,7 @@ import infobip.api.model.sms.mt.send.SMSResponseDetails;
 import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
 
 @Controller
+@SessionAttributes("user")
 public class IndexController {
 
 	@Autowired
@@ -60,6 +62,8 @@ public class IndexController {
 
 	@Autowired
 	private GroupRepository groupRepository;
+	
+	private User user;
 
 	@RequestMapping("/")
 	public String index(Model model, Principal principal) {
@@ -68,7 +72,10 @@ public class IndexController {
 		if (principal == null) {
 			model.addAttribute("username", "Invité");
 		} else {
+			user = userService.findByUsername(principal.getName());
 			model.addAttribute("username", principal.getName());
+			model.addAttribute("user", user);
+		
 		}
 
 		return "index";
@@ -128,6 +135,7 @@ public class IndexController {
 			System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
 			System.out.println("Credit utilisé :" + destinataires.size() + " sms");
 			System.out.println("Solde du compte: " + user.getBalance());
+			
 			// System.out.println("Message status: " +
 			// sentMessageInfo.getStatus().getName());
 			System.out.println(destinataires.toString());
@@ -139,7 +147,7 @@ public class IndexController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm() {
-		return "login";
+		return "login2";
 	}
 
 	@RequestMapping("/403")

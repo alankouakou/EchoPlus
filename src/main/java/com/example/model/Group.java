@@ -17,6 +17,8 @@ import javax.persistence.Table;
 @Table(name="groupe")
 public class Group implements Serializable {
 	
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
@@ -63,5 +65,9 @@ public class Group implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
+	@Override
+	public String toString() {
+		return  name ;
+	}
 }
