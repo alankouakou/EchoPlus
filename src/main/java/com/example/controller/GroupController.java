@@ -4,11 +4,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import com.example.model.Group;
 import com.example.model.Person;
 import com.example.model.User;
 import com.example.service.GroupService;
+import com.example.service.PersonService;
 import com.example.service.UserService;
 
 @SessionAttributes("user")
@@ -32,10 +36,12 @@ public class GroupController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private PersonService personService;
 
 	
 	@RequestMapping(value="/new",method=RequestMethod.GET)
-	public String viewGroup(Model model, Principal principal) {
+	public String newGroup(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
 		Group group = new Group();
 		group.setUser(user);
@@ -43,10 +49,19 @@ public class GroupController {
 		return "register-group";
 	}
 	
-	@RequestMapping(value="/new",method=RequestMethod.POST)
-	public String saveGroup(@ModelAttribute("group") Group group){
-		groupService.save(group);
-		return "redirect:/groups/list";
+@RequestMapping(value="/{group}",method=RequestMethod.GET)
+public String editGroup(@ModelAttribute("group") Group groupe){
+	return "register-group";
+}
+	@RequestMapping(value={"/new","/{group}"},method=RequestMethod.POST)
+	public String saveGroup(@Valid @ModelAttribute("group") Group group, BindingResult result){
+		if(result.hasErrors()){
+			return "register-group";
+		} else {
+			groupService.save(group);
+			return "redirect:/groups/list";
+		}
+		
 	}	
 	
 	@RequestMapping(value={"/list",""},method=RequestMethod.GET)
@@ -68,6 +83,33 @@ public class GroupController {
 		model.addAttribute("groups", groups);
 
 		return "membres"; 
+	}
+	
+	@RequestMapping(value="/delete/{group}")
+	public String delete(Group group){
+		for(Person p: group.getMembers()){
+			p.removeGroup(group);
+		}
+		groupService.delete(group);
+		return "redirect:/groups";
+	}
+	
+	@RequestMapping(value="/{group}/assign-orphans",method=RequestMethod.GET)
+	public String assignOrphans(@ModelAttribute("group") Group group, Principal principal){
+		User user = userService.findByUsername(principal.getName());
+		List<Person> contactsAll = personService.findByUser(user);
+		List<Person> contactsRecupérés = new ArrayList<Person>();
+		for(Person p: contactsAll){
+			if(p.getGroups().size() == 0){
+				p.addGroup(group);
+				contactsRecupérés.add(p);
+			}
+			
+		personService.save(contactsAll);
+		}
+		System.out.println("Groupe : "+group);
+		System.out.println(contactsRecupérés);
+		return "redirect:/groups/membres/"+group.getId();
 	}
 
 }

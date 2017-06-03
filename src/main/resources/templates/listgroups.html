@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:th="http:/www.thymeleaf.org"		
 	layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
@@ -10,21 +11,16 @@
 <body>
 	<nav th:replace="fragments/header::header"></nav>
 	<div layout:fragment="content">
-		<div class="jumbotron">
-
-			<div class="container-fluid">
-				<h2>Mes groupes</h2>
-
+		<div class="box box-success">
+			<div class="box-header with-border">
+				<h3 class="box-title">Mes Groupes</h3>
+				<div class="box-tools pull-right">
+					<a class="btn btn-md btn-info btn-flat" href="#" th:href="@{/groups/new}">Nouveau
+						<span class="glyphicon glyphicon-plus"></span>
+					</a>
+				</div>
 			</div>
-
-		</div>
-		<div class="container-fluid">
-			<div class="col-md-offset-3 col-md-6 col-xs-12">
-				<a class="btn btn-md btn-info" href="#" th:href="@{/groups/new}">Ajouter
-					un groupe <span class="glyphicon glyphicon-plus"></span>
-				</a>
-			</div>
-			<div class="col-md-offset-3 col-md-6 col-xs-12">
+			<div class="box-body">
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -38,25 +34,26 @@
 							<td><span th:text="${g.id}"></span></td>
 							<td><span th:text="${g.name}"></span></td>
 							<td><div class="btn-group">
-									<button type="button" class="btn btn-xs btn-info">Voir</button>
+									<a href="#" th:href="@{/groups/membres/{id}(id=${g.id})}" type="button" class="btn btn-xs btn-flat btn-info">Membres</a>
 									<button type="button"
-										class="btn btn-xs btn-info dropdown-toggle"
+										class="btn btn-xs btn-info btn-flat dropdown-toggle"
 										data-toggle="dropdown" aria-haspopup="true"
 										aria-expanded="false">
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<li><a href="#"
-											th:href="@{/groups/membres/{id}(id=${g.id})}"><span
-												class="glyphicon glyphicon-edit"></span> Voir membbres</a></li>
-										<li><a href="#"><span
-												class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
+										<li><a href="#" th:href="@{/groups/{id}(id=${g.id})}"><span
+												class="ion-edit"></span> Modifier</a></li>
+										<li><a href="#" th:href="@{/{id}/import(id=${g.id})}"><span class="fa file-excel-o"></span>Charger les contacts</a></li>
+										<li><a href="#" th:href="@{/groups/{id}/assign-orphans(id=${g.id})}"><span class="fa file-excel-o"></span>Affecter contacts orphelins</a></li>
+										<li><a href="#" th:href="@{/groups/delete/{id}(id=${g.id})}"><span class="fa fa-minus-circle"></span>Supprimer</a>
 									</ul>
 								</div></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<div class="box-footer"></div>
 		</div>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>

@@ -9,15 +9,14 @@
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
 	<div layout:fragment="content">
-		<div class="jumbotron">
-			<div class="container-fluid">
+			<div class="row">
 				<p></p>
 				<div sec:authorize="isAnonymous()">
 					<h2>
 						<span th:text="#{template.welcome}">Vous êtes nouveau?</span>
 					</h2>
 					<p>
-						<a href="#" class="btn btn-info btn-lg">Créez votre compte!</a>
+						<a href="#" class="btn btn-info btn-lg btn-flat">Créez votre compte!</a>
 					</p>
 				</div>
 				<div sec:authorize="isAuthenticated()">
@@ -26,74 +25,69 @@
 					</h2>
 				</div>
 			</div>
-		</div>
 
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Contacts</h3>
+				<div class="col-md-6 col-xs-12">
+					<div class="box box-success">
+						<div class="box-header with-border">
+							<h3 class="box-title">Contacts</h3>
 						</div>
-						<div class="panel-body">
+						<div class="box-body">
 							<p>Enregistrez vos contacts ou importez vos contacts depuis
 								un fichier!</p>
 
 							<p>
 								<a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/contacts/list}" class="btn btn-warning">liste
+									th:href="@{/contacts/list}" class="btn btn-warning btn-flat">liste
 									contacts</a> <a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/import-xls}" class="btn btn-warning">importez
+									th:href="@{/import-xls}" class="btn btn-warning btn-flat">importez
 									vos contacts</a>
 							</p>
 						</div>
+						<div class="box-footer"></div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Groupes</h3>
+				<div class="col-md-6 col-xs-12">
+					<div class="box box-danger">
+						<div class="box-header with-border">
+							<h3 class="box-title">Groupes</h3>
 						</div>
-						<div class="panel-body">
+						<div class="box-body">
 							<p>Créez et organisez vos contacts par groupe</p>
 							<p>
 								<a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/groups/list}" class="btn btn-warning">liste
+									th:href="@{/groups/list}" class="btn btn-warning btn-flat">liste
 									groupes</a>
 							</p>
 						</div>
+						<div class="box-footer"></div>
 					</div>
 				</div>
 
 			</div>
 			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Gestion compte</h3>
+				<div class="col-md-6 col-xs-12">
+					<div class="box box-warning">
+						<div class="box-header with-border">
+							<h3 class="box-title">Historique</h3>
 						</div>
-						<div class="panel-body">Panel content</div>
+						<div class="box-body">Panel content</div>
+						<div class="box-footer"></div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Historique</h3>
+				<div class="col-md-6 col-xs-12">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">Campagnes</h3>
 						</div>
-						<div class="panel-body">Panel content</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Campagnes</h3>
-						</div>
-						<div class="panel-body">
+						<div class="box-body">
 							<p>
 								<a sec:authorize="isAuthenticated()" th:href="@{/compose}"
-									class="btn btn-warning">Nouvelle campagne</a>
+									class="btn btn-warning btn-flat">Nouvelle campagne</a>
 							</p>
 						</div>
+						<div class="box-footer"></div>
 					</div>
 				</div>
 

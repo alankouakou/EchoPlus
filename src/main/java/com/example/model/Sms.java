@@ -4,11 +4,13 @@ public class Sms {
 	
 	private String from;
 	private String to;
+	private Group group;
 	private String text;
 	
 	public Sms(){
 		this.setFrom("Alan");
 		this.setTo("");
+		this.setGroup(null);
 		this.setText("");
 	}
 	
@@ -24,6 +26,14 @@ public class Sms {
 	public void setTo(String to) {
 		this.to = to;
 	}
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
 	public String getText() {
 		return text;
 	}

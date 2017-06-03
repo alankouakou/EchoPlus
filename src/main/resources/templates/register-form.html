@@ -19,7 +19,7 @@
 	<div layout:fragment="content">
 		<form action="#" class="form-horizontal" th:action="@{/contacts/new}"
 			th:object="${person}" method="post">
-
+			<input type="hidden" th:field="*{id}" />
 			<div class="form-group">
 				<label for="nom" class="control-label col-xs-2">Nom</label>
 				<div class="col-xs-4">
@@ -55,8 +55,8 @@
 			<input type="hidden" th:field="*{user}" />
 			<div class="form-group">
 				<div class="col-xs-offset-2 col-xs-4">
-					<button type="submit" class="btn btn-primary">Enregistrer</button>
-					<button type="reset" class="btn btn-default">Réinitiliaser</button>
+					<button type="submit" class="btn btn-primary btn-flat">Enregistrer</button>
+					<button type="reset" class="btn btn-default btn-flat">Réinitiliaser</button>
 				</div>
 			</div>
 		</form>

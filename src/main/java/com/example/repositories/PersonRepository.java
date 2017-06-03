@@ -17,5 +17,6 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 	public List<Person> findAll(Sort sort);
 	public List<Person> findByUser(User user, Sort sort);
 	public List<Person> findByGroupsContaining(Group groupe,Sort sort);
+	public List<Person> findByUser(User user);
 
 }

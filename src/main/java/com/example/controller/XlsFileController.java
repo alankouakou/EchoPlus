@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.FileBucket;
 import com.example.model.Group;
@@ -50,7 +51,17 @@ public class XlsFileController {
 
 
 	//ServletContext context;
+	@RequestMapping(value = {"/{group}/import"}, method = RequestMethod.GET)
+	public String HelloExcel(Model model, @ModelAttribute("group") Group group) {
+		//model.addAttribute("lstUser", lstUser);
+		FileBucket fileBucket = new FileBucket();
+		fileBucket.setGroupe(group.getId());
+		model.addAttribute("fileBucket",fileBucket);
+		model.addAttribute("message", "Importer des contacts");
+		return "excel_upload";
+	}
 
+	
 	@RequestMapping(value = {"/import-xls"}, method = RequestMethod.GET)
 	public String HelloExcel(Model model) {
 		//model.addAttribute("lstUser", lstUser);
@@ -61,10 +72,10 @@ public class XlsFileController {
 	}
 
 	@RequestMapping(value = "/import-xls", method = RequestMethod.POST)
-	public String processExcel2003(@Valid FileBucket fileBucket, BindingResult result, Model model) {
+	public String processExcel2003(@Valid FileBucket fileBucket, BindingResult result, Model model,  RedirectAttributes ra) {
 		Set<String> Contacts = new HashSet();
 		if(result.hasErrors()){
-			model.addAttribute("message", "Fichier invalide!");
+			ra.addFlashAttribute("message", "Fichier invalide!");
 			return "redirect:/import-xls";
 		} else {
 		try {

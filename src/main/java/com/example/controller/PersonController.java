@@ -58,11 +58,18 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/{person}",method=RequestMethod.GET)
-	public String editPerson(Person person){
-		
-		return "editcontact";
+	public String editPerson(@ModelAttribute("person") Person person){
+		return "register-form";
 	}
 	
+	@RequestMapping(value="/delete/{person}",method=RequestMethod.GET)
+	public String delete(Person person,Principal principal){
+		if(principal != null){
+			person.setGroups(null);			
+			personService.delete(person.getId());
+		}
+		return "redirect:/contacts";
+	}
 
 
 	@RequestMapping(value = {"","/list"}, method = RequestMethod.GET)

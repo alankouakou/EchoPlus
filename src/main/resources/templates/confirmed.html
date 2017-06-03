@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Confirmation d'envoi</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav th:replace="fragments/header::header"></nav>
-	<div class="jumbotron">
 
-		<div class="container-fluid">
-		<h2>Félicitations!</h2>
+	<div layout:fragment="content">
+		<div class="callout callout-success">
+			<h3>Message envoyé!</h3>
+		</div>
+		<div class="box box-success">
+			<div class="box-header with-border">
+				<h3 class="box-title"></h3>
+			</div>
+			<div class="box-body">
+				<p>
+					Message envoyé!<br /> Expediteur : <span th:text="${sms.from}"></span><br />
+					destinataire: <span th:unless="${sms.to != null}" th:text="${sms.group.name}"></span><span th:if="${sms.to != null}" th:text="${sms.to}"></span><br /> Message: <span
+						th:text="${sms.text}"></span><br /> Message ID: <span
+						th:unless="${sentMessageInfo.messageId == null}"
+						th:text="${sentMessageInfo.messageId}"></span><br /> Nouveau
+					solde : <span th:unless="${balance == null}" th:text="${balance}"></span>
+				</p>
+			</div>
+			<div class="box-footer">
+				<a class="btn btn-default btn-flat pull-left" href="#" th:href="@{/compose}">Nouveau
+					message</a> <a class="btn btn-default btn-flat pull-right" href="#"
+					th:href="@{/}">Accueil</a>
+			</div>
 		</div>
 
-	</div>
-	<div class="container-fluid">
-			<p>
-				 Message envoyé!<br /> Expediteur : <span
-					th:text="${sms.from}"></span><br /> 
-					destinataire: <span	th:text="${sms.to}"></span><br /> 
-					Message: <span th:text="${sms.text}"></span><br />
-					Message ID: <span th:unless="${sentMessageInfo.messageId == null}" th:text="${sentMessageInfo.messageId}"></span><br />
-					Nouveau solde : <span th:unless="${balance == null}" th:text="${balance}"></span>
-			</p>
+
 	</div>
 
 	<div th:replace="fragments/footer::footer"></div>

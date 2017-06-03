@@ -69,6 +69,11 @@ public class PersonService {
 	public List<Person> findByUser(User user, Sort sort){
 		return personRepository.findByUser(user, sort);
 	}
+
+	public List<Person> findByUser(User user) {
+		// TODO Auto-generated method stub
+		return personRepository.findByUser(user);
+	}
 	
 	
 	

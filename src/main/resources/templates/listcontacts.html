@@ -7,61 +7,60 @@
 </head>
 <body>
 	<nav th:replace="fragments/header::header"></nav>
-	<div class="jumbotron">
 
-		<div class="container-fluid">
-			<h2>Mes contacts</h2>
-		</div>
-
-	</div>
-	<div class="container-fluid">
 		<div layout:fragment="content">
-			<div class="col-md-offset-3 col-md-6 col-xs-12">
-				<a class="btn btn-md btn-info" href="#" th:href="@{/contacts/new}">Ajouter
-					un contact <span class="glyphicon glyphicon-plus"></span>
-				</a>
-			</div>
-			<div class="col-md-offset-3 col-md-6 col-xs-12">
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>Nom</th>
-							<th>Prénom</th>
-							<th>Contact</th>
-							<th>Groupe</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="p:${persons}">
-							<td><span th:text="${p.lastName}"></span></td>
-							<td><span th:text="${p.firstName}"></span></td>
-							<td><span th:text="${p.contact}"></span></td>
-							<td><span th:text="${p.groups}"></span></td>
-							<td>
-								<div class="btn-group">
-									<button type="button" class="btn btn-xs btn-info">Details</button>
-									<button type="button"
-										class="btn btn-xs btn-info dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">
-										<span class="caret"></span> <span class="sr-only">Toggle
-											Dropdown</span>
-									</button>
-									<ul class="dropdown-menu">
-										<li><a href="#"><span
-												class="glyphicon glyphicon-edit"></span> Modifier</a></li>
-										<li><a href="#"><span
-												class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
-									</ul>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Mes Contacts</h3>
+					<div class="box-tools pull-right">
+						<a class="btn btn-md btn-info btn-flat" href="#" th:href="@{/contacts/new}">Nouveau
+							 <span class="personadd-outline glyphicon-plus"></span>
+						<i class="ion-person-add"></i>
+						</a>
+					</div>
+				</div>
+				<div class="box-body">
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Contact</th>
+								<th class="hidden-xs">Groupe</th>
+								<th class="hidden-xs">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p:${persons}">
+								<td><span th:text="${p.lastName}"></span></td>
+								<td><span th:text="${p.firstName}"></span></td>
+								<td><span th:text="${p.contact}"></span></td>
+								<td class="hidden-xs"><span th:text="${p.groups}"></span></td>
+								<td class="hidden-xs">
+									<div class="btn-group">
+										<a href="#" th:href="@{/contacts/{id}(id=${p.id})}" type="button" class="btn btn-xs btn-info btn-flat">Editer</a>
+										<button type="button"
+											class="btn btn-xs btn-info btn-flat dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											<span class="caret"></span> <span class="sr-only">Toggle
+												Dropdown</span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a href="#" th:href="@{/contacts/delete/{id}(id=${p.id})}"><span
+													class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="box-footer"></div>
 			</div>
 		</div>
-	</div>
 
 </body>
 </html>

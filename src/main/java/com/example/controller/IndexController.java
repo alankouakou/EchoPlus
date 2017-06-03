@@ -62,20 +62,22 @@ public class IndexController {
 
 	@Autowired
 	private GroupRepository groupRepository;
-	
+
+	List<String> destinataires;
 	private User user;
 
 	@RequestMapping("/")
 	public String index(Model model, Principal principal) {
-		ArrayList<Group> groupes = (ArrayList<Group>) groupRepository.findAll();
-		model.addAttribute("groupes", groupes);
 		if (principal == null) {
 			model.addAttribute("username", "Invité");
 		} else {
 			user = userService.findByUsername(principal.getName());
+			List<Group> groupes = (ArrayList<Group>) groupRepository.findByUser(user,
+					new Sort(Sort.Direction.ASC, "name"));
+			model.addAttribute("groupes", groupes);
 			model.addAttribute("username", principal.getName());
 			model.addAttribute("user", user);
-		
+
 		}
 
 		return "index";
@@ -84,14 +86,12 @@ public class IndexController {
 	@RequestMapping("/activites")
 	public String activites(Model model, Pageable p, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
-		Page<RefillRequest> refills = refillService.findByUser(user,p);
-		model.addAttribute("balance",user.getBalance());
+		Page<RefillRequest> refills = refillService.findByUser(user, p);
+		model.addAttribute("balance", user.getBalance());
 		model.addAttribute("page", refills);
 		return "infoscompte";
 	}
 
-
-	
 	@RequestMapping("/hello")
 	@ResponseBody
 	public String home() {
@@ -105,8 +105,15 @@ public class IndexController {
 	}
 
 	@RequestMapping("/compose")
-	public String composeSms(Model model) {
+	public String composeSms(Model model, Principal principal) {
 		Sms message = new Sms();
+		if (principal != null) {
+			user = userService.findByUsername(principal.getName());
+			List<Group> groupes = (ArrayList<Group>) groupRepository.findByUser(user,
+					new Sort(Sort.Direction.ASC, "name"));
+			model.addAttribute("groupes", groupes);
+		}
+
 		model.addAttribute("sms", message);
 		return "compose";
 	}
@@ -123,7 +130,11 @@ public class IndexController {
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public String sendSms(@ModelAttribute("sms") Sms sms, Model model, Principal principal)
 			throws InsufficientFundsException {
-		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
+		if (sms.getTo().isEmpty()) {
+			destinataires = SmsTool.addPrefixToNumbers(sms.getGroup().getContacts());
+		} else {
+			destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
+		}
 		if (destinataires.size() > 0) {
 			User user = new User();
 			user = userService.findByUsername(principal.getName());
@@ -135,7 +146,7 @@ public class IndexController {
 			System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
 			System.out.println("Credit utilisé :" + destinataires.size() + " sms");
 			System.out.println("Solde du compte: " + user.getBalance());
-			
+
 			// System.out.println("Message status: " +
 			// sentMessageInfo.getStatus().getName());
 			System.out.println(destinataires.toString());

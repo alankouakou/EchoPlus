@@ -56,7 +56,7 @@ public class DBInitializer {
 
 			Group userGroup = new Group();
 			userGroup.setUser(user);
-			userGroup.setName("Tous les contacts");
+			userGroup.setName("Aucun Contact");
 			groupRepo.save(userGroup);
 
 			User admin = new User("admin", passwordEncoder.encode("admin4477"));

@@ -4,28 +4,18 @@
 <head>
 <meta charset="UTF-8"></meta>
 <title>Mes contacts</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<script src="/js/jquery-1.12.3.min.js"></script>
-<script src="/js/bootstrap.js"></script>
 </head>
 <body>
 	<nav th:replace="fragments/header::header"></nav>
-	<div class="jumbotron">
-
-		<div class="container-fluid">
-			<h2>Mes contacts</h2>
-		</div>
-
-	</div>
-	<div class="container-fluid">
+		<div class="row">
 		<div layout:fragment="content">
 			<div class="col-md-12 col-xs-12"></div>
-			<div class="col-md-8">
+			<div class="col-md-8 col-xs-8">
 				<div class="box box-info">
 					<div class="box-header with-border">
 						<h3 class="box-title">Membres</h3>
 						<div class="box-tools pull-right">
-							<a class="btn btn-xs btn-info" href="#"
+							<a class="btn btn-xs btn-info btn-flat" href="#"
 								th:href="@{/contacts/new}">Ajouter un contact <span
 								class="glyphicon glyphicon-plus"></span>
 							</a>
@@ -39,7 +29,7 @@
 									<th>Nom</th>
 									<th>Prénom</th>
 									<th>Contact</th>
-									<th>Groupe</th>
+									<th class="hidden-xs">Groupe</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -48,12 +38,12 @@
 									<td><span th:text="${p.lastName}"></span></td>
 									<td><span th:text="${p.firstName}"></span></td>
 									<td><span th:text="${p.contact}"></span></td>
-									<td><span th:text="${p.groups}"></span></td>
+									<td class="hidden-xs"><span th:text="${p.groups}"></span></td>
 									<td>
 										<div class="btn-group">
-											<button type="button" class="btn btn-xs btn-info">Details</button>
+											<button type="button" class="btn btn-xs btn-info flat">Details</button>
 											<button type="button"
-												class="btn btn-xs btn-info dropdown-toggle"
+												class="btn btn-xs btn-info btn-flat dropdown-toggle"
 												data-toggle="dropdown" aria-haspopup="true"
 												aria-expanded="false">
 												<span class="caret"></span> <span class="sr-only">Toggle
@@ -75,16 +65,10 @@
 					<div class="box-footer"></div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-xs-4">
 				<div class="box box-warning">
 					<div class="box-header with-border">
-						<h3 class="box-title">Groupes</h3>
-						<div class="box-tools pull-right">
-							<a class="btn btn-xs btn-warning" href="#"
-								th:href="@{/groups/new}">Ajouter un contact <span
-								class="glyphicon glyphicon-plus"></span>
-							</a>
-						</div>
+						<h3 class="box-title">Autres groupes</h3>
 						
 					</div>
 					<div class="box-body">

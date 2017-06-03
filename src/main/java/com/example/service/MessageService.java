@@ -32,14 +32,18 @@ public class MessageService {
 	private ResponseDetailsService rdService;
 
 	private List<ResponseDetails> rds= new ArrayList<ResponseDetails>();
+	private ArrayList<String> destinataires;
 
 	public SMSResponseDetails sendSms(Account account, User user, Sms sms) throws InsufficientFundsException {
 
 		// user=userService.findByUsername(user.getUsername());
 		SMSResponseDetails sentMessageInfo = new SMSResponseDetails();
 		List<SMSResponseDetails> msgResponses;
-		ArrayList<String> destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
-
+		if(sms.getTo().isEmpty()){
+			destinataires = SmsTool.addPrefixToNumbers(sms.getGroup().getContacts());
+		} else {
+		 destinataires = SmsTool.addPrefixToNumbers(sms.getTo());
+		}
 		if (user.getBalance() > destinataires.size()) {
 
 			System.out.println(account.getLogin() + ":" + account.getPassword());
@@ -68,7 +72,7 @@ public class MessageService {
 
 			userService.save(user);
 			System.out.println("Message envoyé! Nouveau solde :" + user.getBalance());
-			System.out.println(new BasicAuthConfiguration(account.getLogin(), account.getPassword()).getAuthorizationHeader());
+			//System.out.println(new BasicAuthConfiguration(account.getLogin(), account.getPassword()).getAuthorizationHeader());
 			System.out.println("----- details ------");
 			for (ResponseDetails r : rds) {
 				System.out.println("Details reponse:" + r);
