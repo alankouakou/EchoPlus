@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Notifier v1.0 - Objet introuvable </title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="/css/mystyle.css" rel="stylesheet" type="text/css" />
-<script src="/js/bootstrap.js"></script>
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
@@ -17,15 +14,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div layout:fragment="content">
 
-		<div class="row">
+		<section class="content" >
 
-			<h2 class="text-success"> Un objet demandé est introuvable! </h2> 
+			<div class="callout callout-danger"> <h4>Une erreur s'est produite!</h4>
+			<p>Veuillez vous reconnectez pour continuer à travailler.</p>
+			 </div> 
 
-		</div>
+		</section>
 
-		<div th:replace="fragments/footer::footer"></div>
 	</div>
 </body>
 </html>

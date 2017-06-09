@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.model.Group;
@@ -38,6 +39,18 @@ public class GroupController {
 	
 	@Autowired
 	private PersonService personService;
+	
+	@ModelAttribute("user")
+	public User getUser(Principal principal){
+		return userService.findByUsername(principal.getName());
+	}
+	
+	@ModelAttribute("groups")
+	public List<Group> getMyGroups(Principal principal){
+		List<Group> groups = groupService.findByUser(getUser(principal), new Sort("name"));
+		return groups;
+	}
+	
 
 	
 	@RequestMapping(value="/new",method=RequestMethod.GET)
@@ -78,6 +91,7 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 		Group groupe = groupService.findOne(id);
 		List<Person> membres = groupService.findMembers(id);
 		model.addAttribute("persons", membres);
+		model.addAttribute("group",groupe);
 		User user = userService.findByUsername(principal.getName());
 		ArrayList<Group> groups =   (ArrayList<Group>) groupService.findByUser(user, new Sort(Direction.ASC,"name"));
 		model.addAttribute("groups", groups);
@@ -93,6 +107,14 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 		groupService.delete(group);
 		return "redirect:/groups";
 	}
+
+	@RequestMapping(value="/remove/{group}/{person}")
+	public String delete(Group group, Person person){
+			person.removeGroup(group);
+			personService.save(person);
+		return "redirect:/groups";
+	}
+	
 	
 	@RequestMapping(value="/{group}/assign-orphans",method=RequestMethod.GET)
 	public String assignOrphans(@ModelAttribute("group") Group group, Principal principal){
@@ -111,5 +133,18 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 		System.out.println(contactsRecupérés);
 		return "redirect:/groups/membres/"+group.getId();
 	}
+	
+	@RequestMapping(value = {"membres/{groupId}/new","membres/{groupId}/{person}"}, method = RequestMethod.POST)
+	public String savePerson(@PathVariable("groupId") int groupId, @ModelAttribute("person") Person person) {
+		//person.addGroup(group);
+		personService.save(person);
+		return "redirect:/groups/membres/"+groupId;
+	}
+	
+	@RequestMapping(value="membres/{groupId}/{person}",method=RequestMethod.GET)
+	public String editPerson(Model model, @PathVariable("groupId") int groupId, @ModelAttribute("person") Person person, Principal principal){
+		System.out.println(person.getGroups());
+		return "register-member";
+	}	
 
 }

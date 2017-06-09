@@ -13,9 +13,9 @@
 			<div class="col-md-8 col-xs-8">
 				<div class="box box-info">
 					<div class="box-header with-border">
-						<h3 class="box-title">Membres</h3>
+						<h3 class="box-title"><span th:text="${#lists.size(persons)}"></span> Membres</h3>
 						<div class="box-tools pull-right">
-							<a class="btn btn-xs btn-info btn-flat" href="#"
+							<a class="btn btn-xs btn-primary btn-flat" href="#"
 								th:href="@{/contacts/new}">Ajouter un contact <span
 								class="glyphicon glyphicon-plus"></span>
 							</a>
@@ -41,18 +41,16 @@
 									<td class="hidden-xs"><span th:text="${p.groups}"></span></td>
 									<td>
 										<div class="btn-group">
-											<button type="button" class="btn btn-xs btn-info flat">Details</button>
+											<a href="#" th:href="@{/groups/membres/{idgroup}/{id}(idgroup=${group.id},id=${p.id})}" type="button" class="btn btn-xs btn-default btn-flat">Editer</a>
 											<button type="button"
-												class="btn btn-xs btn-info btn-flat dropdown-toggle"
+												class="btn btn-xs btn-default btn-flat dropdown-toggle"
 												data-toggle="dropdown" aria-haspopup="true"
 												aria-expanded="false">
 												<span class="caret"></span> <span class="sr-only">Toggle
 													Dropdown</span>
 											</button>
 											<ul class="dropdown-menu">
-												<li><a href="#"><span
-														class="glyphicon glyphicon-edit"></span> Modifier</a></li>
-												<li><a href="#"><span
+												<li><a href="#" th:href="@{groups/remove/{idgroup}/{idperson}(idgroup=${group.id},idperson=${p.id})}"><span
 														class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
 											</ul>
 										</div>

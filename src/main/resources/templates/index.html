@@ -9,7 +9,7 @@
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
 	<div layout:fragment="content">
-			<div class="row">
+			<section class="content-header">
 				<p></p>
 				<div sec:authorize="isAnonymous()">
 					<h2>
@@ -20,13 +20,13 @@
 					</p>
 				</div>
 				<div sec:authorize="isAuthenticated()">
-					<h2 class="text-info">
+					<h3 class="text-info">
 						Bienvenue <span sec:authentication="name">visiteur</span>
-					</h2>
+					</h3>
 				</div>
-			</div>
+			</section>
 
-		<div class="container-fluid">
+		<section class="content">
 			<div class="row">
 				<div class="col-md-6 col-xs-12">
 					<div class="box box-success">
@@ -39,9 +39,9 @@
 
 							<p>
 								<a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/contacts/list}" class="btn btn-warning btn-flat">liste
+									th:href="@{/contacts/list}" class="btn btn-default btn-flat">liste
 									contacts</a> <a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/import-xls}" class="btn btn-warning btn-flat">importez
+									th:href="@{/import-xls}" class="btn btn-default btn-flat">importez
 									vos contacts</a>
 							</p>
 						</div>
@@ -57,7 +57,7 @@
 							<p>Créez et organisez vos contacts par groupe</p>
 							<p>
 								<a sec:authorize="isAuthenticated()" href="#"
-									th:href="@{/groups/list}" class="btn btn-warning btn-flat">liste
+									th:href="@{/groups/list}" class="btn btn-default btn-flat">liste
 									groupes</a>
 							</p>
 						</div>
@@ -72,7 +72,13 @@
 						<div class="box-header with-border">
 							<h3 class="box-title">Historique</h3>
 						</div>
-						<div class="box-body">Panel content</div>
+						<div class="box-body">
+													<p>
+								<a sec:authorize="isAuthenticated()" href="#"
+									th:href="@{/logs}" class="btn btn-default btn-flat">Derniers envois</a>
+							</p>
+						
+						</div>
 						<div class="box-footer"></div>
 					</div>
 				</div>
@@ -84,7 +90,7 @@
 						<div class="box-body">
 							<p>
 								<a sec:authorize="isAuthenticated()" th:href="@{/compose}"
-									class="btn btn-warning btn-flat">Nouvelle campagne</a>
+									class="btn btn-default btn-flat">Nouvelle campagne</a>
 							</p>
 						</div>
 						<div class="box-footer"></div>
@@ -93,7 +99,7 @@
 
 			</div>
 
-		</div>
+		</section>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

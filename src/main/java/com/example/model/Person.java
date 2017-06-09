@@ -1,7 +1,9 @@
 package com.example.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +31,7 @@ public class Person implements Serializable {
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="group_contact",joinColumns={ @JoinColumn(name="person_id")} ,inverseJoinColumns= { @JoinColumn(name="group_id")})
-	private Set<Group> groups = new HashSet();
+	private List<Group> groups = new ArrayList();
 	
 	
 	public Long getId() {
@@ -67,11 +69,11 @@ public class Person implements Serializable {
 		//group.removeMember(this);
 	}
 	
-	public void setGroups(Set<Group> groupes){
+	public void setGroups(List<Group> groupes){
 		this.groups=groupes;
 	}
 	
-	public Set<Group> getGroups(){
+	public List<Group> getGroups(){
 		return this.groups;
 	}
 	public User getUser() {

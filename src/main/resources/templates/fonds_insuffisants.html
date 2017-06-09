@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout2}">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Notifier v1.0 - Fonds insuffisants </title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="/css/mystyle.css" rel="stylesheet" type="text/css" />
-<script src="/js/bootstrap.js"></script>
 </head>
 <body>
 	<nav th:replace="fragments/header :: header"></nav>
@@ -17,13 +15,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div layout:fragment="content">
+	<section class="content">
+		<div class="callout callout-warning" >
 
-		<div class="row">
-
-			<h2 class="text-success"> Le compte utilisé n'a pas suffisamment de fonds pour cette opération! </h2> 
+			<h4> Solde insuffisant</h4> 
+			<p> Vous n'avez pas suffisamment de crédit pour cette opération!</p>
 
 		</div>
+	</section>
 
 		<div th:replace="fragments/footer::footer"></div>
 	</div>

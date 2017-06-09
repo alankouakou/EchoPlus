@@ -50,7 +50,7 @@ public class DBInitializer {
 
 			User user = new User("user", passwordEncoder.encode("user"));
 			user.setName("Invité");
-			user.setBalance(10);
+			user.setBalance(200);
 			user.setRole(roleUser);
 			userRepo.save(user);
 

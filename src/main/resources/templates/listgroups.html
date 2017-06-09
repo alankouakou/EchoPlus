@@ -15,7 +15,7 @@ xmlns:th="http:/www.thymeleaf.org"
 			<div class="box-header with-border">
 				<h3 class="box-title">Mes Groupes</h3>
 				<div class="box-tools pull-right">
-					<a class="btn btn-md btn-info btn-flat" href="#" th:href="@{/groups/new}">Nouveau
+					<a class="btn btn-md btn-primary btn-flat" href="#" th:href="@{/groups/new}">Nouveau
 						<span class="glyphicon glyphicon-plus"></span>
 					</a>
 				</div>
@@ -34,9 +34,9 @@ xmlns:th="http:/www.thymeleaf.org"
 							<td><span th:text="${g.id}"></span></td>
 							<td><span th:text="${g.name}"></span></td>
 							<td><div class="btn-group">
-									<a href="#" th:href="@{/groups/membres/{id}(id=${g.id})}" type="button" class="btn btn-xs btn-flat btn-info">Membres</a>
+									<a href="#" th:href="@{/groups/membres/{id}(id=${g.id})}" type="button" class="btn btn-xs btn-flat btn-default">Membres</a>
 									<button type="button"
-										class="btn btn-xs btn-info btn-flat dropdown-toggle"
+										class="btn btn-xs btn-default btn-flat dropdown-toggle"
 										data-toggle="dropdown" aria-haspopup="true"
 										aria-expanded="false">
 										<span class="caret"></span>

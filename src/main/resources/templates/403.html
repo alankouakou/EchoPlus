@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="~{layout2}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Accès non autorisé</title>
+</head>
+<body>
+	<nav th:replace="fragments/header :: header"></nav>
+	<div class="jumbotron">
+		<div class="container-fluid">
+			<h1 class="text-alert">Objet introuvable!</h1>
+
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<div class="row" layout:fragment="content">
+
+			<div class="callout callout-warning">
+				<h3>Accès non autorisé</h3>
+				<p>Vous n'êtes pas autorisé à acceder à cette page!</p>
+			</div>
+
+		</div>
+
+		<div th:replace="fragments/footer::footer"></div>
+	</div>
+</body>
+</html>

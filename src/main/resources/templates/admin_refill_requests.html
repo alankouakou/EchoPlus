@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org">
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8"></meta>
 <title>Notifier v1.0 - Infos compte</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<!-- header  -->
@@ -17,8 +16,8 @@
 			</p>
 		</div>
 	</div>
-	<div class="container-fluid">
-		<div class="row">
+	<div layout-fragment="content">
+		<section class="content">
 			<div class="col-xs-offset-3 col-xs-6">
 				<h4>Demandes de rechargement</h4>
 				<p>
@@ -79,7 +78,7 @@
 			</div>
 		<!-- </div>  -->
 
-	</div>
+	</section>
 
 	<div th:replace="fragments/footer :: footer"></div>
 	</div>

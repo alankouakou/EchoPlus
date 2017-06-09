@@ -11,14 +11,6 @@ import com.example.exception.InsufficientFundsException;
 public class ExceptionManager {
 	
 
-	public String nullExceptionPage(){
-		return "null_exception_page";
-	}
-	
-	@ExceptionHandler(InsufficientFundsException.class)
-	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
-	public String fondsInsuffisantsExc(){
-		return "fonds_insuffisants";
-	}
+
 
 }

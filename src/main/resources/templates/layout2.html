@@ -49,6 +49,8 @@
             <li class="active"><a th:href="@{/groups}">Groupes <span class="sr-only">(current)</span></a></li>
             <li ><a th:href="@{/contacts}">Contacts </a></li>
 			<li ><a th:href="@{/compose}">Nouveau message </a></li>
+			<li ><a th:href="@{/rappel-cotisations}">Relance cotisations </a></li>
+			<li><a sec:authorize="hasAnyRole('ADMIN','USER')" th:href="@{/logs}">Derniers envois</a>
 <!-- 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration<span class="caret"></span></a>

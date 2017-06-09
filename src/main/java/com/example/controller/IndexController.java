@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import com.example.model.Account;
 import com.example.model.Group;
 import com.example.model.Person;
 import com.example.model.RefillRequest;
+import com.example.model.ResponseDetails;
 import com.example.model.Sms;
 import com.example.repositories.GroupRepository;
 import com.example.repositories.PersonRepository;
@@ -35,8 +37,11 @@ import com.example.service.RefillService;
 import com.example.service.UserService;
 import com.example.util.SmsTool;
 
+import infobip.api.client.GetSentSmsLogs;
 import infobip.api.client.SendSingleTextualSms;
 import infobip.api.config.BasicAuthConfiguration;
+import infobip.api.model.sms.mt.logs.SMSLog;
+import infobip.api.model.sms.mt.logs.SMSLogsResponse;
 import infobip.api.model.sms.mt.send.SMSResponse;
 import infobip.api.model.sms.mt.send.SMSResponseDetails;
 import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
@@ -65,6 +70,11 @@ public class IndexController {
 
 	List<String> destinataires;
 	private User user;
+	
+	@Value("${infobip.login}")
+	private String login;
+	@Value("${infobip.password}")
+	private String password;
 
 	@RequestMapping("/")
 	public String index(Model model, Principal principal) {
@@ -104,7 +114,7 @@ public class IndexController {
 		return "personview";
 	}
 
-	@RequestMapping("/compose")
+	@RequestMapping(value="/compose",method=RequestMethod.GET)
 	public String composeSms(Model model, Principal principal) {
 		Sms message = new Sms();
 		if (principal != null) {
@@ -141,19 +151,23 @@ public class IndexController {
 			SMSResponseDetails sentMessageInfo = messageService.sendSms(account, user, sms);
 			model.addAttribute("sentMessageInfo", sentMessageInfo);
 			model.addAttribute("balance", user.getBalance());
-			System.out.println("Message ID: " + sentMessageInfo.getMessageId());
-			System.out.println("Receiver: " + sentMessageInfo.getTo());
-			System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
-			System.out.println("Credit utilisé :" + destinataires.size() + " sms");
-			System.out.println("Solde du compte: " + user.getBalance());
-
-			// System.out.println("Message status: " +
-			// sentMessageInfo.getStatus().getName());
-			System.out.println(destinataires.toString());
+			logDetails(user, sentMessageInfo);
 			return "confirmed";
 		} else {
 			return "compose";
 		}
+	}
+
+	private void logDetails(User user, SMSResponseDetails sentMessageInfo) {
+		System.out.println("Message ID: " + sentMessageInfo.getMessageId());
+		System.out.println("Receiver: " + sentMessageInfo.getTo());
+		System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
+		System.out.println("Credit utilisé :" + destinataires.size() + " sms");
+		System.out.println("Solde du compte: " + user.getBalance());
+
+		// System.out.println("Message status: " +
+		// sentMessageInfo.getStatus().getName());
+		System.out.println(destinataires.toString());
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -165,4 +179,38 @@ public class IndexController {
 	public String forbidden() {
 		return "forbidden";
 	}
+	
+	
+	@RequestMapping("/logs")
+	public String getLogs(Model model, Principal principal)
+	{
+		System.out.println("login: "+login+", password: "+password);
+        GetSentSmsLogs client = new GetSentSmsLogs(new BasicAuthConfiguration(login, password));
+        List<ResponseDetails> rdList = new ArrayList();
+        SMSLogsResponse responses = client.execute(null, null, null, null, null, null, null, 500, null, null);
+        for (SMSLog result:  responses.getResults()) {
+            //SMSLog result = responses.getResults().get(i);
+            ResponseDetails rd = new ResponseDetails();
+            rd.setMessageId(result.getMessageId());
+            rd.setSentAt(result.getSentAt());
+            rd.setSender(result.getFrom());
+            rd.setTo(result.getTo());
+            rd.setStatus(result.getStatus().getName());
+            rdList.add(rd);
+            
+            System.out.println("Message ID: " + result.getMessageId());
+            System.out.println("Sent at: " + result.getSentAt());
+            System.out.println("Sender: " + result.getFrom());
+            System.out.println("Receiver: " + result.getTo());
+            System.out.println("Message text: " + result.getText());
+            System.out.println("Status: " + result.getStatus().getName());
+            System.out.println("Price: " + result.getPrice().getPricePerMessage() + " " + result.getPrice().getCurrency());
+         	
+        }
+        
+		model.addAttribute("responses",rdList);
+		return "logs";
+	}
+	
+	
 }
