@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,19 +58,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin().loginPage("/login")
+		http
+		.authorizeRequests()
+		.antMatchers("/webjars/**").permitAll()
+		//.antMatchers("/login*").permitAll()
+		.antMatchers("/**").authenticated()
+		.and()
+		.formLogin().loginPage("/login")
+		.permitAll()
 		.and()
 		.logout()
-		.logoutUrl("/logout")	
-		.logoutSuccessUrl("/login?logout")		
+		.logoutUrl("/logout")
+		.logoutSuccessUrl("/login?logout")
 		.and()
-		.authorizeRequests()
-		.antMatchers("/").authenticated()
-		.antMatchers("/compose").hasAnyRole("USER","ADMIN")
-		.antMatchers(HttpMethod.POST,"/send").hasAnyRole("USER","ADMIN")
-		.anyRequest().permitAll()
-		.and()
-		.exceptionHandling().accessDeniedPage("/403");
+		.exceptionHandling().accessDeniedPage("/403")
+		;
+		
+		
 	}
 
 }

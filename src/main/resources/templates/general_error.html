@@ -13,8 +13,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 	<section class="content">
 		<div class="callout callout-warning" >
 
-			<h4> Solde insuffisant</h4> 
-			<p> Vous n'avez pas suffisamment de crédit pour cette opération!</p>
+			<h4> Erreur système</h4> 
+			<p th:text="${error_message}"> L'application a rencontré un problème. Veuillez-vous reconnecter svp! </p>
 
 		</div>
 	</section>

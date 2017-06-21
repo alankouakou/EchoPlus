@@ -1,6 +1,7 @@
 package com.example.configuration;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,5 +22,11 @@ public class GlobalControllerAdvice {
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
 	public String fondsInsuffisantsExc(){
 		return "fonds_insuffisants";
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public String otherExceptionHandler(Model model, Exception exception){
+		model.addAttribute("error_message",exception.getMessage());
+		return "general_error";
 	}
 }

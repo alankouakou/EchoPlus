@@ -177,7 +177,7 @@ public class IndexController {
 
 	@RequestMapping("/403")
 	public String forbidden() {
-		return "forbidden";
+		return "403";
 	}
 	
 	
