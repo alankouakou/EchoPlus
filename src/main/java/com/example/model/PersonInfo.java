@@ -1,7 +1,5 @@
 package com.example.model;
 
-import java.util.Date;
-
 public class PersonInfo {
 
 	private int id;

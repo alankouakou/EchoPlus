@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Person;
 import com.example.model.User;
 import com.example.repositories.PersonRepository;
-import com.example.repositories.UserRepository;
 
 @Service
 @Transactional

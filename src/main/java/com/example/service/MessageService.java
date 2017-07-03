@@ -1,22 +1,14 @@
 package com.example.service;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.text.StrSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.exception.InsufficientFundsException;
 import com.example.model.Account;
-import com.example.model.ContactExtended;
 import com.example.model.Cotisation;
 import com.example.model.ResponseDetails;
 import com.example.model.Sms;

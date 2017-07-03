@@ -3,12 +3,8 @@ package com.example.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.exception.InsufficientFundsException;
 
@@ -18,6 +14,8 @@ public class User implements Serializable {
 	private String username;
 	private String password;
 	private String name;
+	private String email;
+	private Boolean enabled;
 	private String status;
 	private int balance;
 	@ManyToOne
@@ -50,6 +48,22 @@ public class User implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void setName(String name) {

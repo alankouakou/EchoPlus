@@ -6,30 +6,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.MybootApplication;
 import com.example.exception.InsufficientFundsException;
-import com.example.model.User;
 import com.example.model.Account;
 import com.example.model.Group;
 import com.example.model.Person;
 import com.example.model.RefillRequest;
 import com.example.model.ResponseDetails;
 import com.example.model.Sms;
+import com.example.model.User;
 import com.example.repositories.GroupRepository;
 import com.example.repositories.PersonRepository;
 import com.example.service.MessageService;
@@ -38,13 +33,10 @@ import com.example.service.UserService;
 import com.example.util.SmsTool;
 
 import infobip.api.client.GetSentSmsLogs;
-import infobip.api.client.SendSingleTextualSms;
 import infobip.api.config.BasicAuthConfiguration;
 import infobip.api.model.sms.mt.logs.SMSLog;
 import infobip.api.model.sms.mt.logs.SMSLogsResponse;
-import infobip.api.model.sms.mt.send.SMSResponse;
 import infobip.api.model.sms.mt.send.SMSResponseDetails;
-import infobip.api.model.sms.mt.send.textual.SMSTextualRequest;
 
 @Controller
 @SessionAttributes("user")
