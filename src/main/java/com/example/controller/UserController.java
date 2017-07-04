@@ -1,13 +1,12 @@
 package com.example.controller;
 
 import java.security.Principal;
-
-import javax.validation.Valid;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.model.PasswordReset;
 import com.example.model.RefillRequest;
 import com.example.model.RequestStatus;
+import com.example.model.Role;
 import com.example.model.User;
-import com.example.repositories.StatusRepo;
 import com.example.service.RefillService;
+import com.example.service.RoleService;
 import com.example.service.UserService;
 
 @Controller
@@ -26,10 +26,24 @@ import com.example.service.UserService;
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	RefillService refillService;
+	RoleService roleSvc;
+	
+	@Autowired
+	private RefillService refillService;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
+	
+	@GetMapping
+	public String listUsers(Model model){
+		List<User> users = userService.findAll();
+		model.addAttribute("users",users);
+		return "listusers";
+	}
 	
 	@GetMapping("/password/change")
 	public String initPasswordChange(Model model, Principal principal){
@@ -73,14 +87,16 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/save")
-	public String saveUser(@Valid User user, BindingResult result){
-		if(result.hasErrors()){
-			return "redirect:/users/new";
-		} else {
-			userService.save(user);
-		}
-		return "register-user";
+	@PostMapping({"/new","/save"})
+	public String saveUser(@ModelAttribute("user") User user){
+			String password = user.getPassword();
+			Role userRole = roleSvc.findByName("ROLE_USER");
+			user.setRole(userRole);
+			user.setEnabled(false);
+			User u=userService.save(user);
+			System.out.println("Compte créé! E-mail: "+u.getEmail()+"password: "+password);
+			
+			return "redirect:/";
 	}
 	
 	

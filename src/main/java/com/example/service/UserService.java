@@ -69,12 +69,15 @@ public class UserService {
 		return userRepo.findOne(arg0);
 	}
 
-	public <S extends User> List<S> save(Iterable<S> arg0) {
-		return userRepo.save(arg0);
+	public List<User> save(Iterable<User> users) {
+		
+		return userRepo.save(users);
 	}
 
-	public <S extends User> S save(S arg0) {
-		return userRepo.save(arg0);
+	public User save(User user) {
+		String encodedPwd = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPwd);
+		return userRepo.save(user);
 	}
 
 	public User findByUsername(String email) {

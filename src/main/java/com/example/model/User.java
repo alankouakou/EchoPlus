@@ -5,6 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 import com.example.exception.InsufficientFundsException;
 
@@ -12,8 +16,13 @@ import com.example.exception.InsufficientFundsException;
 public class User implements Serializable {
 	@Id
 	private String username;
+	@Size(min=3,message="Trop court!(3 caract. mini")
 	private String password;
-	private String name;
+	@Size(min=3,message="Trop court!(3 caract. mini")
+	private String firstName;
+	@Size(min=3,message="Trop court!(3 caract. mini")
+	private String lastName;
+	@Email
 	private String email;
 	private Boolean enabled;
 	private String status;
@@ -28,6 +37,7 @@ public class User implements Serializable {
 		this.password = "changeme";
 		this.balance = 0;
 		this.status = "disabled";
+		this.enabled = true;
 	}
 
 	public User(String username, String password) {
@@ -46,10 +56,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -66,12 +72,24 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getUsername() {
 		return username;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public void setUsername(String email) {

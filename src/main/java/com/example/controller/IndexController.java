@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -109,6 +110,8 @@ public class IndexController {
 	@RequestMapping(value="/compose",method=RequestMethod.GET)
 	public String composeSms(Model model, Principal principal) {
 		Sms message = new Sms();
+		String sender = StringUtils.upperCase(principal.getName());
+		message.setFrom(sender);
 		if (principal != null) {
 			user = userService.findByUsername(principal.getName());
 			List<Group> groupes = (ArrayList<Group>) groupRepository.findByUser(user,

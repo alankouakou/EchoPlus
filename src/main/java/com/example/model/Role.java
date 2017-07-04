@@ -16,6 +16,7 @@ public class Role implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String name;
+	private String description;
 	@OneToMany(mappedBy="role")
 	private List<User> users;
 	
@@ -49,6 +50,16 @@ public class Role implements Serializable {
 	}
 
 
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -56,6 +67,12 @@ public class Role implements Serializable {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+
+	@Override
+	public String toString() {
+		return  description;
 	}
 	
 }
