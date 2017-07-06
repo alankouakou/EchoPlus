@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,12 +17,15 @@ import com.example.exception.InsufficientFundsException;
 public class User implements Serializable {
 	@Id
 	private String username;
-	@Size(min=3,message="Trop court!(3 caract. mini")
+	@NotNull(message="Renseignez le mot de passe")
+	@Size(min=3,message="Trop court!(3 caract. minimum)")
 	private String password;
-	@Size(min=3,message="Trop court!(3 caract. mini")
+	@Size(min=3,message="Trop court!(3 caract. minimum)")
 	private String firstName;
-	@Size(min=3,message="Trop court!(3 caract. mini")
+	@Size(min=3,message="Trop court!(3 caract. minimum)")
 	private String lastName;
+	
+	@NotNull(message="Renseignez l'e-mail")
 	@Email
 	private String email;
 	private Boolean enabled;

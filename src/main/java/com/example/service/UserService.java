@@ -11,6 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +24,19 @@ import com.example.repositories.UserRepository;
 @Service
 @Transactional
 public class UserService {
-	
+
 	@Autowired
 	UserRepository userRepo;
-	
+
 	@Autowired
 	RoleRepository roleRepo;
-	
+
 	@Autowired
 	StatusRepo statusRepo;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	
 	public long count() {
 		return userRepo.count();
 	}
@@ -70,22 +70,28 @@ public class UserService {
 	}
 
 	public List<User> save(Iterable<User> users) {
-		
+
 		return userRepo.save(users);
 	}
 
 	public User save(User user) {
-		String encodedPwd = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPwd);
+		if (userRepo.findByUsername(user.getUsername()) == null) {
+			String encodedPwd = passwordEncoder.encode(user.getPassword());
+			user.setPassword(encodedPwd);
+		}
+		return userRepo.save(user);
+	}
+
+	public User updateInfos(User user) {
 		return userRepo.save(user);
 	}
 
 	public User findByUsername(String email) {
 		return userRepo.findByUsername(email);
 	}
-	
-	public Boolean passwordReset(String username, String password, String passwordConfirm){
-		if(password.equals(passwordConfirm)){	
+
+	public Boolean passwordReset(String username, String password, String passwordConfirm) {
+		if (password.equals(passwordConfirm)) {
 			User user = userRepo.findByUsername(username);
 			user.setPassword(passwordEncoder.encode(password));
 			userRepo.save(user);
@@ -94,8 +100,8 @@ public class UserService {
 			return false;
 		}
 	}
-	
-	public RefillRequest requestRefill(Principal principal){
+
+	public RefillRequest requestRefill(Principal principal) {
 		RefillRequest refill = new RefillRequest();
 		User user = findByUsername(principal.getName());
 		refill.setUser(user);
@@ -103,7 +109,25 @@ public class UserService {
 		return refill;
 	}
 
+	@Secured("ROLE_ADMIN")
+	public User suspend(String username) {
+		User u = userRepo.findByUsername(username);
+		if (u != null) {
+			u.setEnabled(false);
+			userRepo.save(u);
+		}
+		return u;
+	}
 
+	@Secured("ROLE_ADMIN")
+	public User unsuspend(String username) {
+		User u = userRepo.findByUsername(username);
+		if (u != null) {
+			u.setEnabled(true);
+			userRepo.save(u);
+		}
+		return u;
 
+	}
 
 }

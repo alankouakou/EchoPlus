@@ -136,7 +136,7 @@ public class XlsFileController {
 	}
 
 	@RequestMapping(value = "/import-xls2007", method = RequestMethod.POST)
-	public String processExcel2007(@Valid FileBucket fileBucket, BindingResult result, Model model) {
+	public String processExcel2007(@Valid FileBucket fileBucket, BindingResult result, Model model, Principal principal) {
 		if(result.hasErrors()){
 			model.addAttribute("message", "Fichier invalide!");
 			return "redirect:/import-xls2007";
@@ -183,7 +183,7 @@ public class XlsFileController {
 	}	
 
 	@RequestMapping(value = "/rappel-cotisations", method = RequestMethod.POST)
-	public String rappelCotisation(@Valid FileBucket fileBucket, BindingResult result, Model model,  RedirectAttributes ra) {
+	public String rappelCotisation(@Valid FileBucket fileBucket, BindingResult result, Model model,  RedirectAttributes ra, Principal principal) {
 		
 
 		

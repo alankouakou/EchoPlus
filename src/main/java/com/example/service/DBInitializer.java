@@ -55,6 +55,7 @@ public class DBInitializer {
 			user.setEmail("user@mail.com");
 			user.setBalance(10);
 			user.setRole(roleUser);
+			user.setEnabled(false);
 			userRepo.save(user);
 
 			Group userGroup = new Group();
@@ -67,6 +68,7 @@ public class DBInitializer {
 			admin.setFirstName("Administrateur");
 			admin.setEmail("admin@mail.com");
 			admin.setRole(roleAdmin);
+			admin.setEnabled(true);
 			userRepo.save(admin);
 
 			Group adminGroup = new Group();

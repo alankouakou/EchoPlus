@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,7 +20,7 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
 @EnableWebSecurity
-
+@EnableGlobalMethodSecurity(securedEnabled=true,prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -44,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
-		.usersByUsernameQuery("select username,password,true from User where username=?")
+		.usersByUsernameQuery("select username,password,enabled from User where username=?")
 		.authoritiesByUsernameQuery("select u.username, r.name from user u, role r where u.role_id=r.id and u.username=?")
 		.passwordEncoder(new BCryptPasswordEncoder());
 		// En phase de test
@@ -62,12 +63,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//.antMatchers("/login*").permitAll()
 		.antMatchers("/**").authenticated()
 		.and()
-		.formLogin().loginPage("/login")
+		.formLogin().loginPage("/login").defaultSuccessUrl("/")
 		.permitAll()
 		.and()
 		.logout()
 		.logoutUrl("/logout")
-		.logoutSuccessUrl("/login?logout")
+		.logoutSuccessUrl("/login")
 		.and()
 		.exceptionHandling().accessDeniedPage("/403")
 		;

@@ -98,6 +98,9 @@
 									<li><a sec:authorize="hasAnyRole('ADMIN','USER')"
 										th:href="@{/logs}">Derniers envois</a></li>
 									<li class="divider"></li>
+									<li><a sec:authorize="hasRole('ADMIN')" href="#"
+										th:href="@{/users}">Comptes utilisateur</a></li>
+
 									<li><a sec:authorize="isAuthenticated()" href="#"
 										th:href="@{/users/refill}">Rechargements</a></li>
 									<li class="divider"></li>

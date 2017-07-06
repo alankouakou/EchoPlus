@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Role implements Serializable {
@@ -15,7 +17,9 @@ public class Role implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	@NotNull(message="Renseignez le champ!")
 	private String name;
+	@Size(min=3,message="3 caractères minimum")
 	private String description;
 	@OneToMany(mappedBy="role")
 	private List<User> users;

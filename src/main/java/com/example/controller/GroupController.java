@@ -62,11 +62,11 @@ public class GroupController {
 	}
 	
 @RequestMapping(value="/{group}",method=RequestMethod.GET)
-public String editGroup(@ModelAttribute("group") Group groupe){
+public String editGroup(@ModelAttribute("group") Group groupe, Principal principal){
 	return "register-group";
 }
 	@RequestMapping(value={"/new","/{group}"},method=RequestMethod.POST)
-	public String saveGroup(@Valid @ModelAttribute("group") Group group, BindingResult result){
+	public String saveGroup(@Valid @ModelAttribute("group") Group group, BindingResult result, Principal principal){
 		if(result.hasErrors()){
 			return "register-group";
 		} else {
@@ -99,7 +99,7 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 	}
 	
 	@RequestMapping(value="/delete/{group}")
-	public String delete(Group group){
+	public String delete(Group group, Principal principal){
 		for(Person p: group.getMembers()){
 			p.removeGroup(group);
 		}
@@ -108,7 +108,7 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 	}
 
 	@RequestMapping(value="/remove/{group}/{person}")
-	public String delete(Group group, Person person){
+	public String delete(Group group, Person person, Principal principal){
 			person.removeGroup(group);
 			personService.save(person);
 		return "redirect:/groups";
@@ -134,7 +134,7 @@ public String editGroup(@ModelAttribute("group") Group groupe){
 	}
 	
 	@RequestMapping(value = {"membres/{groupId}/new","membres/{groupId}/{person}"}, method = RequestMethod.POST)
-	public String savePerson(@PathVariable("groupId") int groupId, @ModelAttribute("person") Person person) {
+	public String savePerson(@PathVariable("groupId") int groupId, @ModelAttribute("person") Person person, Principal principal) {
 		//person.addGroup(group);
 		personService.save(person);
 		return "redirect:/groups/membres/"+groupId;

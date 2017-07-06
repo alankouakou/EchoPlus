@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.example.exception.InsufficientFundsException;
@@ -63,6 +64,7 @@ public class RefillService {
 		return statusRepo.findByName(name);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void refill(String admin_account, Long refillId) throws InsufficientFundsException {
 		// TODO Auto-generated method stub
 		int adminBalance = 0;

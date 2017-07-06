@@ -1,8 +1,11 @@
 package com.example.model;
 
+import javax.validation.constraints.NotNull;
+
 public class Sms {
-	
+	@NotNull
 	private String from;
+	
 	private String to;
 	private Group group;
 	private String text;

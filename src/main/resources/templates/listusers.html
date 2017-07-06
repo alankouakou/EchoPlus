@@ -25,24 +25,28 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Nom</th>
-								<th>Prénom</th>
-								<th>E-mail</th>
-								<th class="hidden-xs">role</th>
 								<th class="hidden-xs">login</th>
+								<th>Prénom</th>
+								<th>Nom</th>
+								<th>E-mail</th>
+								<th class="hidden-xs">Role</th>
+								<th class="hidden-xs">Solde</th>
+								<th class="hidden-xs">Actif</th>
 								<th class="hidden-xs">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="u:${users}">
-								<td><span th:text="${u.lastName}"></span></td>
+								<td class="hidden-xs"><span th:text="${u.username}"></span></td>
 								<td><span th:text="${u.firstName}"></span></td>
+								<td><span th:text="${u.lastName}"></span></td>
 								<td><span th:text="${u.email}"></span></td>
 								<td><span th:text="${u.role}"></span></td>
-								<td class="hidden-xs"><span th:text="${u.username}"></span></td>
+								<td><span th:text="${u.balance}"></span></td>
+								<td><span th:text="${u.enabled == true?'Actif':'Suspendu'}"></span></td>
 								<td class="hidden-xs">
 									<div class="btn-group">
-										<a href="#" th:href="@{/users/{username}(id=${u.username})}" type="button" class="btn btn-xs btn-default btn-flat">Editer</a>
+										<a href="#" th:href="@{/users/edit/{username}(username=${u.username})}" type="button" class="btn btn-xs btn-default btn-flat">Editer</a>
 										<button type="button"
 											class="btn btn-xs btn-default btn-flat dropdown-toggle"
 											data-toggle="dropdown" aria-haspopup="true"
@@ -51,8 +55,14 @@
 												Dropdown</span>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a href="#" th:href="@{/users/delete/{username}(id=${u.username})}"><span
+											<li th:if="${u.enabled==true}"><a href="#" th:href="@{/users/suspend/{username}(username=${u.username})}"><span
+													class="fa fa-lock"></span> Suspendre</a></li>
+											<li th:if="${u.enabled!=true}"><a href="#" th:href="@{/users/unsuspend/{username}(username=${u.username})}"><span
+													class="fa fa-unlock-alt"></span> Activer</a></li>
+
+											<li><a href="#" th:href="@{/users/delete/{username}(username=${u.username})}"><span
 													class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
+													
 										</ul>
 									</div>
 								</td>

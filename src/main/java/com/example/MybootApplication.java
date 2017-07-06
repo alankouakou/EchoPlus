@@ -62,7 +62,7 @@ public class MybootApplication {
 
 	@Bean
 	public Account getAccount() {
-		Account account = new Account(env.getProperty("infobip.login"), env.getProperty("infobip.password"));
+		Account account = new Account(env.getProperty("account.login"), env.getProperty("account.password"));
 		return account;
 	}
 

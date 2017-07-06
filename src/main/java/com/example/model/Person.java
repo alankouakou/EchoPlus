@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import com.example.validators.PhoneNumber;
 
 @Entity
 public class Person implements Serializable {
@@ -22,6 +25,7 @@ public class Person implements Serializable {
 	private Long id;
 	private String firstName;
 	private String lastName;
+	@PhoneNumber
 	private String contact;
 	@ManyToOne
 	@JoinColumn(name="account")
@@ -29,7 +33,7 @@ public class Person implements Serializable {
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="group_contact",joinColumns={ @JoinColumn(name="person_id")} ,inverseJoinColumns= { @JoinColumn(name="group_id")})
-	private List<Group> groups = new ArrayList();
+	private List<Group> groups = new ArrayList<>();
 	
 	
 	public Long getId() {

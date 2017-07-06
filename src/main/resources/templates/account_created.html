@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout2}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Confirmation de création de compte</title>
+</head>
+<body>
+	<nav th:replace="fragments/header::header"></nav>
+
+	<div layout:fragment="content">
+
+		<div class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">×</button>
+			<h4>
+				<i class="icon fa fa-check"></i> Compte créé avec succès!
+			</h4>
+			<p>Votre login est: <span th:text="${user.login}"></span></p>
+			<p>Vous avez <span th:text="${user.balance}"></span> crédit(s) de sms </p>
+			<p>Connectez-vous et rechargez votre compte pour pouvoir faire des envois de sms <a th:href="@{/users/refill}">connectez-vous</a>.</p>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

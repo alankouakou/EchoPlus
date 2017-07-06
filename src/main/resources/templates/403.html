@@ -19,10 +19,23 @@
 	<div class="container-fluid">
 
 		<div class="row" layout:fragment="content">
-
-			<div class="callout callout-warning">
-				<h3>Accès non autorisé</h3>
-				<p>Vous n'êtes pas autorisé à acceder à cette page!</p>
+			<section class="content-header"></section>
+			<div class="alert alert-warning alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">×</button>
+				<h4>
+					<i class="fa fa-ban"></i> Action refusée!
+				</h4>
+			</div>
+			<div class="box box-warning">
+				<div class="box-header">
+					<h3 class="box-title">Description</h3>
+				</div>
+				<div class="box-body">
+					<p class="text-warning">Vous n'avez le profil requis pour
+						effectuer cette opération!</p>
+				</div>
+				<div class="box-footer"></div>
 			</div>
 
 		</div>

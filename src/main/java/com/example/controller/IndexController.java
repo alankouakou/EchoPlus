@@ -64,9 +64,9 @@ public class IndexController {
 	List<String> destinataires;
 	private User user;
 	
-	@Value("${infobip.login}")
+	@Value("${account.login}")
 	private String login;
-	@Value("${infobip.password}")
+	@Value("${account.password}")
 	private String password;
 
 	@RequestMapping("/")
@@ -102,7 +102,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/person", method = RequestMethod.POST)
-	public String index(@ModelAttribute("person") Person p) {
+	public String index(@ModelAttribute("person") Person p, Principal principal) {
 
 		return "personview";
 	}
@@ -124,7 +124,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/testsend", method = RequestMethod.GET)
-	public String testPage(@ModelAttribute("sms") Sms sms) {
+	public String testPage(@ModelAttribute("sms") Sms sms, Principal principal) {
 		// Sms sms = new Sms();
 		sms.setFrom("UN TEST");
 		sms.setTo("09007718");
@@ -146,14 +146,14 @@ public class IndexController {
 			SMSResponseDetails sentMessageInfo = messageService.sendSms(account, user, sms);
 			model.addAttribute("sentMessageInfo", sentMessageInfo);
 			model.addAttribute("balance", user.getBalance());
-			logDetails(user, sentMessageInfo);
+			logDetails(user, sentMessageInfo,principal);
 			return "confirmed";
 		} else {
 			return "compose";
 		}
 	}
 
-	private void logDetails(User user, SMSResponseDetails sentMessageInfo) {
+	private void logDetails(User user, SMSResponseDetails sentMessageInfo, Principal principal) {
 		System.out.println("Message ID: " + sentMessageInfo.getMessageId());
 		System.out.println("Receiver: " + sentMessageInfo.getTo());
 		System.out.println("SmsCount: " + sentMessageInfo.getSmsCount());
@@ -171,7 +171,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("/403")
-	public String forbidden() {
+	public String forbidden(Principal principal) {
 		return "403";
 	}
 	
