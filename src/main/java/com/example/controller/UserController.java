@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.exception.InsufficientFundsException;
 import com.example.model.PasswordReset;
 import com.example.model.RefillRequest;
 import com.example.model.RequestStatus;
@@ -136,7 +137,7 @@ public class UserController {
 	
 	
 	@PostMapping("/save_changes")
-	public String saveUser(@ModelAttribute("role") Role role, @ModelAttribute("user") User u, Principal principal){
+	public String saveUser(@ModelAttribute("role") Role role, @ModelAttribute("user") User u, Principal principal) throws InsufficientFundsException {
 		//Role role = roleSvc.findByName(roleName);
 		u.setRole(role);
 		User user = userService.updateInfos(u);

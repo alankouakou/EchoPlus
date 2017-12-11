@@ -15,6 +15,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.exception.InsufficientFundsException;
 import com.example.model.RefillRequest;
 import com.example.model.User;
 import com.example.repositories.RoleRepository;
@@ -76,18 +77,29 @@ public class UserService {
 
 	public User save(User user) {
 		if (userRepo.findByUsername(user.getUsername()) == null) {
+			// crypte le password seulement en cas de création de user 
 			String encodedPwd = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPwd);
 		}
 		return userRepo.save(user);
 	}
 
-	public User updateInfos(User user) {
-		return userRepo.save(user);
+	public User updateInfos(User user) throws InsufficientFundsException {
+		User myUser = findByUsername(user.getUsername());
+		if(myUser != null) {
+			user.setBalance(myUser.getBalance());
+			userRepo.save(user);
+			System.out.println("user "+user.getUsername()+" updated");
+		}
+		return user;
 	}
 
-	public User findByUsername(String email) {
-		return userRepo.findByUsername(email);
+	public User findByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+	
+	public User findByEmail(String email) {
+		return userRepo.findByEmail(email);
 	}
 
 	public Boolean passwordReset(String username, String password, String passwordConfirm) {

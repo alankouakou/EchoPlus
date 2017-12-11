@@ -52,6 +52,7 @@ public class DBInitializer {
 
 			User user = new User("user", passwordEncoder.encode("user"));
 			user.setFirstName("Invité");
+			user.setSenderName("Invité");
 			user.setEmail("user@mail.com");
 			user.setBalance(10);
 			user.setRole(roleUser);
@@ -66,6 +67,7 @@ public class DBInitializer {
 			User admin = new User("admin", passwordEncoder.encode("admin4477"));
 			admin.setBalance(50);
 			admin.setFirstName("Administrateur");
+			admin.setSenderName("Admin");
 			admin.setEmail("admin@mail.com");
 			admin.setRole(roleAdmin);
 			admin.setEnabled(true);

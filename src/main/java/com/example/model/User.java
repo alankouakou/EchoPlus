@@ -24,7 +24,9 @@ public class User implements Serializable {
 	private String firstName;
 	@Size(min=3,message="Trop court!(3 caract. minimum)")
 	private String lastName;
-	
+	@Size(min=3,max=11,message="Trop court!(3 caract. minimum)")
+	private String senderName;
+
 	@NotNull(message="Renseignez l'e-mail")
 	@Email
 	private String email;
@@ -96,6 +98,14 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+	
 	public void setUsername(String email) {
 		this.username = email;
 	}

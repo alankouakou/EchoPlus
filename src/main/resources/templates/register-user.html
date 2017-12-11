@@ -54,6 +54,14 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="senderName" class="control-label col-xs-4">Pseudo (Expediteur)</label>
+							<div class="col-xs-6">
+								<input type="text" class="form-control" th:field="*{senderName}"
+									id="senderName" placeholder="Pseudo (expediteur)" maxlength="11"/>
+									<span class="text-red" th:if="${#fields.hasErrors('senderName')}" th:errors="*{firstName}"></span>
+							</div>
+						</div>						
+						<div class="form-group">
 							<label for="email" class="control-label col-xs-4">E-mail</label>
 							<div class="col-xs-6">
 								<input type="text" class="form-control" th:field="*{email}"

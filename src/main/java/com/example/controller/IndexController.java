@@ -3,6 +3,7 @@ package com.example.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,8 @@ public class IndexController {
 		message.setFrom(sender);
 		if (principal != null) {
 			user = userService.findByUsername(principal.getName());
+			String senderName = StringUtils.capitalize(user.getSenderName()); 
+			message.setFrom(senderName);
 			List<Group> groupes = (ArrayList<Group>) groupRepository.findByUser(user,
 					new Sort(Sort.Direction.ASC, "name"));
 			model.addAttribute("groupes", groupes);
